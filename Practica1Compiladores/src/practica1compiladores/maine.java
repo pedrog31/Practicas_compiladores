@@ -9,13 +9,15 @@ package practica1compiladores;
  *
  * @author pedro
  */
-public class Practica1Compiladores {
-
+public class maine {
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Produccion produccion = new Produccion ("55. <s> -> b<nulo>");
+        produccion.getPartes().forEach((s) -> {
+            System.out.println(s);
+        });
+        System.out.println(produccion.toString());
     }
-    
 }
