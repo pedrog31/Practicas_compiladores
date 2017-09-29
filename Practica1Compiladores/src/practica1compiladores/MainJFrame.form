@@ -68,7 +68,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jButtonNuevoNoTerminal" pref="217" max="32767" attributes="0"/>
-                                  <Component id="jButton1" max="32767" attributes="0"/>
+                                  <Component id="jButtonBorrarUltimo" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -84,7 +84,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
-                          <Component id="jButton1" alignment="1" pref="37" max="32767" attributes="0"/>
+                          <Component id="jButtonBorrarUltimo" alignment="1" pref="37" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -105,7 +105,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButtonNuevaGramatica">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Crear nueva gramatica"/>
+                <Property name="text" type="java.lang.String" value="Nueva gramatica"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevaGramaticaActionPerformed"/>
@@ -121,15 +121,12 @@
                 <Component class="javax.swing.JList" name="jListGramatica">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                        <StringItem index="4" value="Item 5"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jListGramaticaMouseClicked"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -154,6 +151,7 @@
             <Component class="javax.swing.JButton" name="jButtonNuevoTerminal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo terminal"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoTerminalActionPerformed"/>
@@ -164,10 +162,14 @@
                 <Property name="text" type="java.lang.String" value="Nuevo separador"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoSeparadorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonNuevoNoTerminal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo no terminal"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoNoTerminalActionPerformed"/>
@@ -180,17 +182,21 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextPane" name="jTextPane2">
+                <Component class="javax.swing.JTextPane" name="jTextPaneProduccionSeleccionada">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JButton" name="jButtonBorrarUltimo">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Borrar parte"/>
+                <Property name="text" type="java.lang.String" value="Borrar ultimo"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarUltimoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

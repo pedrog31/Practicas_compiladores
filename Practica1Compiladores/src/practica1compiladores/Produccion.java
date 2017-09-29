@@ -46,8 +46,15 @@ public class Produccion {
         partes.add(part);
     }
     
-    public void deleteLastPart () {
-        partes.remove(partes.size()-1);
+    public String deleteLastPart () {
+        try {
+            String part = partes.get(partes.size()-1);
+            partes.remove(partes.size()-1);
+            return part;
+        }catch (Exception e) {
+            return null;
+        }
+        
     }
 
     @Override
@@ -86,5 +93,9 @@ public class Produccion {
     
     public boolean isTerminal (String part) {
         return !part.contains(">");
+    }
+    
+    public boolean isNonTerminal (String part) {
+        return part.contains("<") && part.contains(">");
     }
 }
