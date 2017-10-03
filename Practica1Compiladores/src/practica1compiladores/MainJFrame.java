@@ -8,6 +8,8 @@ package practica1compiladores;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -51,6 +53,8 @@ public class MainJFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPaneProduccionSeleccionada = new javax.swing.JTextPane();
         jButtonBorrarUltimo = new javax.swing.JButton();
+        jButtonSecuenciaNula = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
         jPanelSimplificacionGramatica = new javax.swing.JPanel();
         jPanelAutomataFinito = new javax.swing.JPanel();
         jPanelReconocimientoHilera = new javax.swing.JPanel();
@@ -117,6 +121,16 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButtonSecuenciaNula.setText("Secuencia nula");
+        jButtonSecuenciaNula.setEnabled(false);
+        jButtonSecuenciaNula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSecuenciaNulaActionPerformed(evt);
+            }
+        });
+
+        jButtonGuardar.setText("Guardar");
+
         javax.swing.GroupLayout jPanelCreacionGramaticaLayout = new javax.swing.GroupLayout(jPanelCreacionGramatica);
         jPanelCreacionGramatica.setLayout(jPanelCreacionGramaticaLayout);
         jPanelCreacionGramaticaLayout.setHorizontalGroup(
@@ -127,34 +141,43 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPaneGramatica)
                     .addComponent(jButtonNuevaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelNumeroProduccion)
                     .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
-                        .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                        .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelNumeroProduccion)
                             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
-                                .addComponent(jButtonNuevoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonNuevoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNuevoSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
+                                .addComponent(jButtonNuevoSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNuevoNoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonNuevoNoTerminal, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                            .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jButtonSecuenciaNula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanelCreacionGramaticaLayout.setVerticalGroup(
             jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabelNumeroProduccion)
+                .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabelNumeroProduccion))
+                    .addComponent(jButtonGuardar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevoTerminal)
                     .addComponent(jButtonNuevoSeparador)
-                    .addComponent(jButtonNuevoNoTerminal))
+                    .addComponent(jButtonNuevoNoTerminal)
+                    .addComponent(jButtonSecuenciaNula))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNuevaProduccion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,7 +192,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelSimplificacionGramatica.setLayout(jPanelSimplificacionGramaticaLayout);
         jPanelSimplificacionGramaticaLayout.setHorizontalGroup(
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 648, Short.MAX_VALUE)
         );
         jPanelSimplificacionGramaticaLayout.setVerticalGroup(
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +205,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelAutomataFinito.setLayout(jPanelAutomataFinitoLayout);
         jPanelAutomataFinitoLayout.setHorizontalGroup(
             jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 648, Short.MAX_VALUE)
         );
         jPanelAutomataFinitoLayout.setVerticalGroup(
             jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +218,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelReconocimientoHilera.setLayout(jPanelReconocimientoHileraLayout);
         jPanelReconocimientoHileraLayout.setHorizontalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 648, Short.MAX_VALUE)
         );
         jPanelReconocimientoHileraLayout.setVerticalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,6 +263,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
             }
         } else {
+            produccionActual = new Produccion(1);
             jListGramatica.setModel(modelo);
             jButtonNuevoTerminal.setEnabled(true);
             jButtonNuevoNoTerminal.setEnabled(true);
@@ -247,19 +271,43 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevaGramaticaActionPerformed
 
     private void jButtonNuevaProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaProduccionActionPerformed
-        // TODO add your handling code here:
+        try {
+            gramatica.getProducciones().add(produccionActual.getId(), produccionActual);
+            modelo.add(produccionActual.getId(), produccionActual.toString());
+        } catch (Exception e) {
+            gramatica.getProducciones().add(produccionActual);
+            modelo.addElement(produccionActual.toString());
+        }
+        jButtonNuevoTerminal.setEnabled(true);
+        jButtonNuevoNoTerminal.setEnabled(true);
+        produccionActual = new Produccion(gramatica.getProducciones().size() + 1);
+        jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
     }//GEN-LAST:event_jButtonNuevaProduccionActionPerformed
 
     private void jButtonNuevoTerminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTerminalActionPerformed
-        String terminal = JOptionPane.showInputDialog(rootPane, "Inserte el terminal (Solo un caracter)", "Nuevo terminal", JOptionPane.OK_OPTION).substring(0, 1);
-        produccionActual.addPart(terminal);
-        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
+        String terminal = JOptionPane.showInputDialog(rootPane, "Inserte el terminal: \n-Solo un caracter\n-letras minusculas o numeros", "Nuevo terminal", JOptionPane.OK_OPTION).substring(0, 1).toLowerCase();
+        Pattern pat = Pattern.compile("\\w");
+        Matcher mat = pat.matcher(terminal);
+        if (mat.matches()) {
+            jButtonSecuenciaNula.setEnabled(false);
+            produccionActual.addPart(terminal);
+            jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
+            jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "\n-Solo un caracter\n-letras minusculas o numeros", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonNuevoTerminalActionPerformed
 
     private void jButtonNuevoNoTerminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoNoTerminalActionPerformed
+        jButtonSecuenciaNula.setEnabled(false);
         String noTerminal = "<" + JOptionPane.showInputDialog(rootPane, "Inserte el no terminal", "Nuevo no terminal", JOptionPane.OK_OPTION) + ">";
         produccionActual.addPart(noTerminal);
         jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
+        if (produccionActual.isOnRight()) {
+            jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
+        } else {
+            jButtonNuevoSeparador.setEnabled(true);
+        }
     }//GEN-LAST:event_jButtonNuevoNoTerminalActionPerformed
 
     private void jListGramaticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListGramaticaMouseClicked
@@ -277,14 +325,32 @@ public class MainJFrame extends javax.swing.JFrame {
             if (part.contains("->")) {
                 jButtonNuevoSeparador.setEnabled(true);
             }
+            if (produccionActual.isSeparator(produccionActual.getPartes().get(produccionActual.getPartes().size()-1))) jButtonSecuenciaNula.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "La produccion esta vacia", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
     }//GEN-LAST:event_jButtonBorrarUltimoActionPerformed
 
     private void jButtonNuevoSeparadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoSeparadorActionPerformed
-        // TODO add your handling code here:
+        jButtonNuevoNoTerminal.setEnabled(true);
+        jButtonNuevoTerminal.setEnabled(true);
+        jButtonSecuenciaNula.setEnabled(true);
+        jButtonNuevoSeparador.setEnabled(false);
+        produccionActual.addPart(" -> ");
+        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
     }//GEN-LAST:event_jButtonNuevoSeparadorActionPerformed
+
+    private void jButtonSecuenciaNulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSecuenciaNulaActionPerformed
+        produccionActual.addPart("λ");
+        jButtonNuevoNoTerminal.setEnabled(false);
+        jButtonNuevoTerminal.setEnabled(false);
+        jButtonSecuenciaNula.setEnabled(false);
+        jButtonNuevoSeparador.setEnabled(false);
+        jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
+        jButtonBorrarUltimo.setEnabled(true);
+        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
+    }//GEN-LAST:event_jButtonSecuenciaNulaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,11 +387,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBorrarUltimo;
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
     private javax.swing.JButton jButtonNuevaProduccion;
     private javax.swing.JButton jButtonNuevoNoTerminal;
     private javax.swing.JButton jButtonNuevoSeparador;
     private javax.swing.JButton jButtonNuevoTerminal;
+    private javax.swing.JButton jButtonSecuenciaNula;
     private javax.swing.JLabel jLabelNumeroProduccion;
     private javax.swing.JList<String> jListGramatica;
     private javax.swing.JPanel jPanelAutomataFinito;
