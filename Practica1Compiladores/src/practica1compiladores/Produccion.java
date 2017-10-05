@@ -38,6 +38,10 @@ public class Produccion {
     public List<String> getPartes() {
         return partes;
     }
+    
+      public String getPartes(int i) {
+        return partes.get(i);
+    }
 
     public void setPartes(List<String> partes) {
         this.partes = partes;

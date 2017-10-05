@@ -15,6 +15,8 @@ import java.util.*;
 public class Gramatica {
 
     private List<Produccion> producciones;
+    private int nNoTerminales;
+    private int nTerminales;
 
     public Gramatica() {
         producciones = new ArrayList();

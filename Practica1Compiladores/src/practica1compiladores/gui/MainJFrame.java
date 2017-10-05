@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practica1compiladores;
+package practica1compiladores.gui;
 
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import practica1compiladores.Gramatica;
+import practica1compiladores.Produccion;
 
 /**
  *
