@@ -28,6 +28,7 @@ public class MainJFrame extends javax.swing.JFrame {
     DefaultListModel modelo;
     Gramatica gramatica;
     Produccion produccionActual;
+    Boolean editing = false;
 
     public MainJFrame() {
         initComponents();
@@ -50,7 +51,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jButtonNuevaProduccion = new javax.swing.JButton();
         jLabelNumeroProduccion = new javax.swing.JLabel();
         jButtonNuevoTerminal = new javax.swing.JButton();
-        jButtonNuevoSeparador = new javax.swing.JButton();
         jButtonNuevoNoTerminal = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextPaneProduccionSeleccionada = new javax.swing.JTextPane();
@@ -96,14 +96,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonNuevoSeparador.setText("Nuevo separador");
-        jButtonNuevoSeparador.setEnabled(false);
-        jButtonNuevoSeparador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevoSeparadorActionPerformed(evt);
-            }
-        });
-
         jButtonNuevoNoTerminal.setText("Nuevo no terminal");
         jButtonNuevoNoTerminal.setEnabled(false);
         jButtonNuevoNoTerminal.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +124,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.setEnabled(false);
 
         javax.swing.GroupLayout jPanelCreacionGramaticaLayout = new javax.swing.GroupLayout(jPanelCreacionGramatica);
         jPanelCreacionGramatica.setLayout(jPanelCreacionGramaticaLayout);
@@ -151,15 +144,16 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNumeroProduccion)
                             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
-                                .addComponent(jButtonNuevoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNuevoSeparador, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNuevoNoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNuevoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonNuevoNoTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonSecuenciaNula, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                                .addGap(143, 143, 143)
+                                .addComponent(jButtonGuardar))
+                            .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonSecuenciaNula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanelCreacionGramaticaLayout.setVerticalGroup(
@@ -177,7 +171,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevoTerminal)
-                    .addComponent(jButtonNuevoSeparador)
                     .addComponent(jButtonNuevoNoTerminal)
                     .addComponent(jButtonSecuenciaNula))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,7 +248,6 @@ public class MainJFrame extends javax.swing.JFrame {
             if (mJFileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 try {
                     gramatica.leerGramatica(mJFileChooser.getSelectedFile().getPath());
-                    jButtonNuevoTerminal.setEnabled(true);
                     jButtonNuevoNoTerminal.setEnabled(true);
                     gramatica.getProducciones().forEach((produccion) -> {
                         modelo.addElement(produccion.toString());
@@ -267,20 +259,20 @@ public class MainJFrame extends javax.swing.JFrame {
         } else {
             produccionActual = new Produccion(1);
             jListGramatica.setModel(modelo);
-            jButtonNuevoTerminal.setEnabled(true);
             jButtonNuevoNoTerminal.setEnabled(true);
         }
     }//GEN-LAST:event_jButtonNuevaGramaticaActionPerformed
 
     private void jButtonNuevaProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaProduccionActionPerformed
-        try {
-            gramatica.getProducciones().add(produccionActual.getId(), produccionActual);
-            modelo.add(produccionActual.getId(), produccionActual.toString());
-        } catch (Exception e) {
+        if (editing) {
+            jTextPaneProduccionSeleccionada.setText("");
+            editing = false;
+        }else {
             gramatica.getProducciones().add(produccionActual);
             modelo.addElement(produccionActual.toString());
+            jListGramatica.setModel(modelo);
         }
-        jButtonNuevoTerminal.setEnabled(true);
+        jButtonBorrarUltimo.setEnabled(true);
         jButtonNuevoNoTerminal.setEnabled(true);
         produccionActual = new Produccion(gramatica.getProducciones().size() + 1);
         jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
@@ -304,12 +296,14 @@ public class MainJFrame extends javax.swing.JFrame {
         jButtonSecuenciaNula.setEnabled(false);
         String noTerminal = "<" + JOptionPane.showInputDialog(rootPane, "Inserte el no terminal", "Nuevo no terminal", JOptionPane.OK_OPTION) + ">";
         produccionActual.addPart(noTerminal);
-        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
         if (produccionActual.isOnRight()) {
             jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
         } else {
-            jButtonNuevoSeparador.setEnabled(true);
+            produccionActual.addPart(" -> ");
+            jButtonNuevoTerminal.setEnabled(true);
         }
+        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
+
     }//GEN-LAST:event_jButtonNuevoNoTerminalActionPerformed
 
     private void jListGramaticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListGramaticaMouseClicked
@@ -321,34 +315,29 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jListGramaticaMouseClicked
 
     private void jButtonBorrarUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarUltimoActionPerformed
+        editing = true;
         String part = produccionActual.deleteLastPart();
         if (part != null) {
+            try {
+                        modelo.set(produccionActual.getId()-1, produccionActual.toString());
+                                jListGramatica.setModel(modelo);
+
+            }catch (Exception e) {}
             jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
-            if (part.contains("->")) {
-                jButtonNuevoSeparador.setEnabled(true);
+            if (produccionActual.isSeparator(produccionActual.getPartes().get(produccionActual.getPartes().size() - 1))) {
+                jButtonSecuenciaNula.setEnabled(true);
             }
-            if (produccionActual.isSeparator(produccionActual.getPartes().get(produccionActual.getPartes().size()-1))) jButtonSecuenciaNula.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(rootPane, "La produccion esta vacia", "Error", JOptionPane.ERROR_MESSAGE);
         }
         jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
     }//GEN-LAST:event_jButtonBorrarUltimoActionPerformed
 
-    private void jButtonNuevoSeparadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoSeparadorActionPerformed
-        jButtonNuevoNoTerminal.setEnabled(true);
-        jButtonNuevoTerminal.setEnabled(true);
-        jButtonSecuenciaNula.setEnabled(true);
-        jButtonNuevoSeparador.setEnabled(false);
-        produccionActual.addPart(" -> ");
-        jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
-    }//GEN-LAST:event_jButtonNuevoSeparadorActionPerformed
-
     private void jButtonSecuenciaNulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSecuenciaNulaActionPerformed
         produccionActual.addPart("λ");
         jButtonNuevoNoTerminal.setEnabled(false);
         jButtonNuevoTerminal.setEnabled(false);
         jButtonSecuenciaNula.setEnabled(false);
-        jButtonNuevoSeparador.setEnabled(false);
         jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
         jButtonBorrarUltimo.setEnabled(true);
         jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
@@ -393,7 +382,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevaGramatica;
     private javax.swing.JButton jButtonNuevaProduccion;
     private javax.swing.JButton jButtonNuevoNoTerminal;
-    private javax.swing.JButton jButtonNuevoSeparador;
     private javax.swing.JButton jButtonNuevoTerminal;
     private javax.swing.JButton jButtonSecuenciaNula;
     private javax.swing.JLabel jLabelNumeroProduccion;

@@ -64,17 +64,20 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabelNumeroProduccion" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jButtonNuevoTerminal" min="-2" pref="144" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButtonNuevoSeparador" min="-2" pref="146" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jButtonNuevoNoTerminal" min="-2" pref="165" max="-2" attributes="0"/>
+                                      <Component id="jButtonNuevoTerminal" min="-2" pref="199" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jButtonNuevoNoTerminal" min="-2" pref="201" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButtonSecuenciaNula" min="-2" pref="151" max="-2" attributes="0"/>
-                                  <Component id="jButtonGuardar" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
+                                      <Component id="jButtonGuardar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jButtonSecuenciaNula" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -100,7 +103,6 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButtonNuevoTerminal" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonNuevoSeparador" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonNuevoNoTerminal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonSecuenciaNula" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -169,15 +171,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoTerminalActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonNuevoSeparador">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nuevo separador"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoSeparadorActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JButton" name="jButtonNuevoNoTerminal">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo no terminal"/>
@@ -222,6 +215,7 @@
             <Component class="javax.swing.JButton" name="jButtonGuardar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

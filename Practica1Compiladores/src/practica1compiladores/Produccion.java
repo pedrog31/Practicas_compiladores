@@ -109,7 +109,7 @@ public class Produccion {
     }
 
     public boolean isOfAcceptance() {
-        return partes.get(partes.size()-2).equalsIgnoreCase(" -> ") && isTerminal(partes.get(partes.size() - 1));
+        return partes.contains("λ");
     }
 
     public boolean isSpecial() {
