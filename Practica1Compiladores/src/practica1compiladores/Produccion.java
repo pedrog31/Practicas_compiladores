@@ -39,7 +39,7 @@ public class Produccion {
         return partes;
     }
     
-      public String getPartes(int i) {
+    public String getPartes(int i) {
         return partes.get(i);
     }
 
@@ -109,7 +109,7 @@ public class Produccion {
     }
 
     public boolean isOfAcceptance() {
-        return partes.contains("λ");
+        return partes.contains("λ") || partes.contains("^");
     }
 
     public boolean isSpecial() {
@@ -120,7 +120,7 @@ public class Produccion {
             return isNonTerminal(partes.get(0))
                     && isSeparator(partes.get(1))
                     && isTerminal(partes.get(2))
-                    && isNonTerminal(partes.get(1));
+                    && isNonTerminal(partes.get(3));
         }
         return false;
     }
@@ -131,5 +131,17 @@ public class Produccion {
     
     public boolean isCorrect () {
         return isOnRight() && !isSeparator(partes.get(partes.size()-1));
+    }
+    
+    public String getLast () {
+        return partes.get(partes.size()-1);
+    }
+    
+    public List<String> getRightParts () {
+        List<String> right = new ArrayList();
+        for (int i = 2; i < partes.size(); i++) {
+            right.add(partes.get(i));
+        }
+        return right;
     }
 }

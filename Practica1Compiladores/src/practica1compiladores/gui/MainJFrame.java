@@ -58,6 +58,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jButtonSecuenciaNula = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jPanelSimplificacionGramatica = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jPanelAutomataFinito = new javax.swing.JPanel();
         jPanelReconocimientoHilera = new javax.swing.JPanel();
 
@@ -183,15 +184,28 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTabbedPaneMain.addTab("Creacion gramatica", jPanelCreacionGramatica);
 
+        jButton1.setText("Simplificar gramatica");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelSimplificacionGramaticaLayout = new javax.swing.GroupLayout(jPanelSimplificacionGramatica);
         jPanelSimplificacionGramatica.setLayout(jPanelSimplificacionGramaticaLayout);
         jPanelSimplificacionGramaticaLayout.setHorizontalGroup(
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelSimplificacionGramaticaLayout.setVerticalGroup(
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSimplificacionGramaticaLayout.createSequentialGroup()
+                .addContainerGap(363, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         jTabbedPaneMain.addTab("Simplificacion gramatica", jPanelSimplificacionGramatica);
@@ -343,6 +357,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
     }//GEN-LAST:event_jButtonSecuenciaNulaActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -377,6 +395,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBorrarUltimo;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
