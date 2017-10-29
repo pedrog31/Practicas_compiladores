@@ -432,6 +432,8 @@ public class MainJFrame extends javax.swing.JFrame {
                         modelo.addElement(produccion.toString());
                     });
                     jListGramatica.setModel(modelo);
+                    if (!gramatica.getProducciones().isEmpty())
+                        jButtonGuardar.setEnabled(true);
                 } catch (FileNotFoundException ex) {
                 }
             }
@@ -542,9 +544,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_simplificarActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        JFileChooser fc = new JFileChooser();
-        
-        
+        gramatica.guardar();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

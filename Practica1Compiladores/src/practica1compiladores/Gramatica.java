@@ -7,6 +7,7 @@ package practica1compiladores;
 
 import java.io.*;
 import java.util.*;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -21,13 +22,25 @@ public class Gramatica {
     }
 
     public int getnNoTerminales() {
+        int nNoTerminales = 0;
         for (Produccion produccion: producciones) {
-            
+            for (String parte: produccion.getPartes()) {
+                if (produccion.isNonTerminal(parte))
+                    nNoTerminales++;
+            }
         }
-        return 0;
+        return nNoTerminales;
     }
+    
     public int getnTerminales() {
-        return 0;
+        int nTerminales = 0;
+        for (Produccion produccion: producciones) {
+            for (String parte: produccion.getPartes()) {
+                if (produccion.isTerminal(parte))
+                    nTerminales++;
+            }
+        }
+        return nTerminales;
     }
 
     public Boolean getIsRegular() {
@@ -165,6 +178,32 @@ public class Gramatica {
             gra.append(produccion.toString()).append("\n");
         });
         return gra.toString();
+    }
+
+    public void guardar() {
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(fc);
+        BufferedWriter bw = null;
+        try {
+            String fileExt= ".gra";
+            String ruta = fc.getSelectedFile().getPath()+fileExt;
+            File archivo = new File(ruta);
+            bw = new BufferedWriter(new FileWriter(archivo));
+            bw.write(toString());
+        } catch (FileNotFoundException ex) {
+
+        } catch (IOException ex) {
+
+        } finally {
+            try {
+                if (bw != null) {
+                    bw.flush();
+                    bw.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     
