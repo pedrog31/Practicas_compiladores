@@ -109,7 +109,7 @@ public class Produccion {
     }
 
     public boolean isOfAcceptance() {
-        return partes.contains("λ") || partes.contains("^");
+        return (partes.contains("λ") || partes.contains("^")) && partes.size() == 3;
     }
 
     public boolean isSpecial() {

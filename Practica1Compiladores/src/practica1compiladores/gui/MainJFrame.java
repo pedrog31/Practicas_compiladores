@@ -5,7 +5,10 @@
  */
 package practica1compiladores.gui;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -58,7 +61,14 @@ public class MainJFrame extends javax.swing.JFrame {
         jButtonSecuenciaNula = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
         jPanelSimplificacionGramatica = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        simplificar = new javax.swing.JButton();
+        noterminalesVivos = new javax.swing.JLabel();
+        noTerminalesMuertos = new javax.swing.JLabel();
+        noTerminalesAlcanzables = new javax.swing.JLabel();
+        noTerminalesInalcanzables = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        gramaticaSimplificada = new javax.swing.JTextArea();
         jPanelAutomataFinito = new javax.swing.JPanel();
         jPanelReconocimientoHilera = new javax.swing.JPanel();
 
@@ -126,6 +136,11 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jButtonGuardar.setText("Guardar");
         jButtonGuardar.setEnabled(false);
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCreacionGramaticaLayout = new javax.swing.GroupLayout(jPanelCreacionGramatica);
         jPanelCreacionGramatica.setLayout(jPanelCreacionGramaticaLayout);
@@ -184,12 +199,27 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTabbedPaneMain.addTab("Creacion gramatica", jPanelCreacionGramatica);
 
-        jButton1.setText("Simplificar gramatica");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        simplificar.setText("Simplificar gramatica");
+        simplificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                simplificarActionPerformed(evt);
             }
         });
+
+        noterminalesVivos.setText("No terminales vivos");
+
+        noTerminalesMuertos.setText("No terminales muertos");
+
+        noTerminalesAlcanzables.setText("No terminales alcanzables");
+
+        noTerminalesInalcanzables.setText("No terminales inalcanzables");
+
+        jLabel6.setText("Gramatica");
+
+        gramaticaSimplificada.setEditable(false);
+        gramaticaSimplificada.setColumns(20);
+        gramaticaSimplificada.setRows(5);
+        jScrollPane2.setViewportView(gramaticaSimplificada);
 
         javax.swing.GroupLayout jPanelSimplificacionGramaticaLayout = new javax.swing.GroupLayout(jPanelSimplificacionGramatica);
         jPanelSimplificacionGramatica.setLayout(jPanelSimplificacionGramaticaLayout);
@@ -197,14 +227,39 @@ public class MainJFrame extends javax.swing.JFrame {
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                .addGroup(jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(simplificar, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
+                        .addComponent(noTerminalesMuertos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(noTerminalesInalcanzables))
+                    .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
+                        .addComponent(noterminalesVivos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(noTerminalesAlcanzables))
+                    .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanelSimplificacionGramaticaLayout.setVerticalGroup(
             jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelSimplificacionGramaticaLayout.createSequentialGroup()
-                .addContainerGap(363, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGap(30, 30, 30)
+                .addComponent(jLabel6)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noterminalesVivos)
+                    .addComponent(noTerminalesAlcanzables))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noTerminalesMuertos)
+                    .addComponent(noTerminalesInalcanzables))
+                .addGap(65, 65, 65)
+                .addComponent(simplificar)
                 .addContainerGap())
         );
 
@@ -281,7 +336,7 @@ public class MainJFrame extends javax.swing.JFrame {
         if (editing) {
             jTextPaneProduccionSeleccionada.setText("");
             editing = false;
-        }else {
+        } else {
             gramatica.getProducciones().add(produccionActual);
             modelo.addElement(produccionActual.toString());
             jListGramatica.setModel(modelo);
@@ -333,10 +388,11 @@ public class MainJFrame extends javax.swing.JFrame {
         String part = produccionActual.deleteLastPart();
         if (part != null) {
             try {
-                        modelo.set(produccionActual.getId()-1, produccionActual.toString());
-                                jListGramatica.setModel(modelo);
+                modelo.set(produccionActual.getId() - 1, produccionActual.toString());
+                jListGramatica.setModel(modelo);
 
-            }catch (Exception e) {}
+            } catch (Exception e) {
+            }
             jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
             if (produccionActual.isSeparator(produccionActual.getPartes().get(produccionActual.getPartes().size() - 1))) {
                 jButtonSecuenciaNula.setEnabled(true);
@@ -357,14 +413,34 @@ public class MainJFrame extends javax.swing.JFrame {
         jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
     }//GEN-LAST:event_jButtonSecuenciaNulaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void simplificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simplificarActionPerformed
+        Set<String> vivos, muertos, alcanzables, inalcanzables;
+        vivos = gramatica.getNoTerminalesVivos();
+        muertos = gramatica.getNoTerminalesMuertos(vivos);
+        alcanzables = gramatica.getNoTerminalesAlcanzables();
+        inalcanzables = gramatica.getNoTerminalesInalcanzables(alcanzables);
+        if (muertos.isEmpty() && inalcanzables.isEmpty()) {
+            gramaticaSimplificada.setText("La gramatica no puede ser simplificada");
+        } else {
+            Gramatica gSimplificada = gramatica.simplificarGramatica(muertos, inalcanzables);
+            gramaticaSimplificada.setText(gSimplificada.toString());
+        }
+        noTerminalesMuertos.setText(noTerminalesMuertos.getText() + ":  " + muertos.toString());
+        noterminalesVivos.setText(noterminalesVivos.getText() + ":  " + vivos.toString());
+        noTerminalesAlcanzables.setText(noTerminalesAlcanzables.getText() + ":  " + alcanzables.toString());
+        noTerminalesInalcanzables.setText(noTerminalesInalcanzables.getText() + ":  " + inalcanzables.toString());
+    }//GEN-LAST:event_simplificarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        JFileChooser fc = new JFileChooser();
+        
+        
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -375,16 +451,40 @@ public class MainJFrame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainJFrame.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainJFrame.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainJFrame.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainJFrame.class
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -395,7 +495,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextArea gramaticaSimplificada;
     private javax.swing.JButton jButtonBorrarUltimo;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
@@ -403,6 +503,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevoNoTerminal;
     private javax.swing.JButton jButtonNuevoTerminal;
     private javax.swing.JButton jButtonSecuenciaNula;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelNumeroProduccion;
     private javax.swing.JList<String> jListGramatica;
     private javax.swing.JPanel jPanelAutomataFinito;
@@ -410,8 +511,14 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelReconocimientoHilera;
     private javax.swing.JPanel jPanelSimplificacionGramatica;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneGramatica;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTextPane jTextPaneProduccionSeleccionada;
+    private javax.swing.JLabel noTerminalesAlcanzables;
+    private javax.swing.JLabel noTerminalesInalcanzables;
+    private javax.swing.JLabel noTerminalesMuertos;
+    private javax.swing.JLabel noterminalesVivos;
+    private javax.swing.JButton simplificar;
     // End of variables declaration//GEN-END:variables
 }
