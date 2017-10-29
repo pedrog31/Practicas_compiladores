@@ -82,7 +82,7 @@ public class MainJFrame extends javax.swing.JFrame {
         gramaticaSimplificada = new javax.swing.JTextArea();
         jPanelAutomataFinito = new javax.swing.JPanel();
         generarAF = new javax.swing.JToggleButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
         tipoAf = new javax.swing.JLabel();
         labelTipo = new javax.swing.JToggleButton();
@@ -310,7 +310,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jTable.setGridColor(new java.awt.Color(204, 204, 204));
         jTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        jScrollPane2.setViewportView(jTable);
+        jScrollPane3.setViewportView(jTable);
 
         tipoAf.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
         tipoAf.setText("Tipo:");
@@ -361,7 +361,7 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addGap(111, 111, 111)
                         .addComponent(jConvertirAF)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
         jPanelAutomataFinitoLayout.setVerticalGroup(
@@ -382,7 +382,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAutomataFinitoLayout.createSequentialGroup()
                 .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
@@ -596,7 +596,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
 
         //Crea AF si es regular
-        AF af = new AF(gra);
+        af = new AF(gra);
         imprimirAF(af);
         if (af.isDeterministico()) {
             tipoAf.setText("Tipo: Deterministico");
@@ -701,11 +701,10 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea gramaticaSimplificada;
     private javax.swing.JToggleButton cargarAF;
     private javax.swing.JToggleButton generarAF;
+    private javax.swing.JTextArea gramaticaSimplificada;
     private javax.swing.JToggleButton guardarAf;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBorrarUltimo;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
@@ -713,8 +712,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevoNoTerminal;
     private javax.swing.JButton jButtonNuevoTerminal;
     private javax.swing.JButton jButtonSecuenciaNula;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JToggleButton jConvertirAF;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelNumeroProduccion;
     private javax.swing.JList<String> jListGramatica;
     private javax.swing.JPanel jPanelAutomataFinito;
@@ -723,18 +722,19 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSimplificacionGramatica;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPaneGramatica;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTable jTable;
     private javax.swing.JTextPane jTextPaneProduccionSeleccionada;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton labelTipo;
     private javax.swing.JLabel noTerminalesAlcanzables;
     private javax.swing.JLabel noTerminalesInalcanzables;
     private javax.swing.JLabel noTerminalesMuertos;
     private javax.swing.JLabel noterminalesVivos;
     private javax.swing.JButton simplificar;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton labelTipo;
     private javax.swing.JLabel tipoAf;
     // End of variables declaration//GEN-END:variables
 }
