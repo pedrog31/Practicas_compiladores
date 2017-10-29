@@ -15,36 +15,23 @@ import java.util.*;
 public class Gramatica {
 
     private List<Produccion> producciones;
-    private int nNoTerminales;
-    private int nTerminales;
-    private Boolean isRegular;
     
     public Gramatica() {
         producciones = new ArrayList();
     }
 
     public int getnNoTerminales() {
-        return nNoTerminales;
+        for (Produccion produccion: producciones) {
+            
+        }
+        return 0;
     }
-
-    public void setnNoTerminales(int nNoTerminales) {
-        this.nNoTerminales = nNoTerminales;
-    }
-
     public int getnTerminales() {
-        return nTerminales;
-    }
-
-    public void setnTerminales(int nTerminales) {
-        this.nTerminales = nTerminales;
+        return 0;
     }
 
     public Boolean getIsRegular() {
        return producciones.stream().noneMatch((produccion) -> (!produccion.isSpecial()));
-    }
-
-    public void setIsRegular(Boolean isRegular) {
-        this.isRegular = isRegular;
     }
     
     public List<Produccion> getProducciones() {

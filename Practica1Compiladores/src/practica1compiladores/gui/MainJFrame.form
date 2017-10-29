@@ -415,7 +415,7 @@
           <SubComponents>
             <Component class="javax.swing.JToggleButton" name="generarAF">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar Gr&#xe1;matica"/>
+                <Property name="text" type="java.lang.String" value="Convertir"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generarAFActionPerformed"/>

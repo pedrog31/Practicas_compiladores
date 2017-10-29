@@ -288,7 +288,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTabbedPaneMain.addTab("Simplificacion gramatica", jPanelSimplificacionGramatica);
 
-        generarAF.setText("Cargar Grámatica");
+        generarAF.setText("Convertir");
         generarAF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generarAFActionPerformed(evt);
@@ -583,20 +583,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     private void generarAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarAFActionPerformed
-
-        // TODO add your handling code here:
-        //Lee gramatica 
-        Gramatica gra = new Gramatica();
-        JFileChooser fc = new JFileChooser();
-        fc.showOpenDialog(fc);
-        try {
-            gra.leerGramatica(fc.getSelectedFile().getPath());
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         //Crea AF si es regular
-        af = new AF(gra);
+        af = new AF(gramatica);
         imprimirAF(af);
         if (af.isDeterministico()) {
             tipoAf.setText("Tipo: Deterministico");
