@@ -120,6 +120,8 @@ public class AF {
     }
 
     public AF(String ruta) {
+        
+        //carga af desde un archivo
         Boolean creado = false;
         estados = new ArrayList();
         simbolos = new ArrayList();
@@ -172,6 +174,8 @@ public class AF {
     }
 
     public void llenarAF(int where, String linea) {
+        
+        //llena af dependiendo si es o no estado, transicion o salida
         System.out.println("LINEA " + linea);
 
         String[] partes = linea.split(" ");
@@ -208,7 +212,9 @@ public class AF {
     return af2;
 }
     
-    public void unir(AF af, String transicion){
+    public void unir(AF afNuevo, String transicion){
+        
+        // esto creo que junta muchos estados de una transicion no deterministica y los vuelve uno agregandolos al nuevo af
         System.out.println("--UNIÓN--");
         String partes[] = transicion.split(",");
         
@@ -308,6 +314,10 @@ public class AF {
             }
             System.out.println();
         }
+        System.out.println("___________________________");
+        System.out.println("simbolos "+simbolos);
+        System.out.println("estados "+estados);
+        System.out.println("simbolos nuevos "+ estadosNuevos);
 
     }
     
