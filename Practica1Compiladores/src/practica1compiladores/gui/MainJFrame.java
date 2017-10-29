@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -16,6 +19,9 @@ import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import practica1compiladores.AF;
 import practica1compiladores.Gramatica;
 import practica1compiladores.Produccion;
 
@@ -32,9 +38,12 @@ public class MainJFrame extends javax.swing.JFrame {
     Gramatica gramatica;
     Produccion produccionActual;
     Boolean editing = false;
+    AF af;
 
     public MainJFrame() {
         initComponents();
+
+        jConvertirAF.setVisible(false);
     }
 
     /**
@@ -46,6 +55,8 @@ public class MainJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
         jTabbedPaneMain = new javax.swing.JTabbedPane();
         jPanelCreacionGramatica = new javax.swing.JPanel();
         jButtonNuevaGramatica = new javax.swing.JButton();
@@ -70,7 +81,19 @@ public class MainJFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         gramaticaSimplificada = new javax.swing.JTextArea();
         jPanelAutomataFinito = new javax.swing.JPanel();
+        generarAF = new javax.swing.JToggleButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
+        tipoAf = new javax.swing.JLabel();
+        labelTipo = new javax.swing.JToggleButton();
+        guardarAf = new javax.swing.JToggleButton();
+        cargarAF = new javax.swing.JToggleButton();
+        jConvertirAF = new javax.swing.JToggleButton();
         jPanelReconocimientoHilera = new javax.swing.JPanel();
+
+        jToggleButton1.setText("jToggleButton1");
+
+        jToggleButton2.setText("jToggleButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -183,7 +206,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevoTerminal)
@@ -265,15 +288,102 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jTabbedPaneMain.addTab("Simplificacion gramatica", jPanelSimplificacionGramatica);
 
+        generarAF.setText("Cargar Grámatica");
+        generarAF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generarAFActionPerformed(evt);
+            }
+        });
+
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable.setGridColor(new java.awt.Color(204, 204, 204));
+        jTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        jScrollPane2.setViewportView(jTable);
+
+        tipoAf.setFont(new java.awt.Font("Open Sans", 1, 18)); // NOI18N
+        tipoAf.setText("Tipo:");
+
+        labelTipo.setSelected(true);
+        labelTipo.setContentAreaFilled(false);
+        labelTipo.setEnabled(false);
+        labelTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                labelTipoActionPerformed(evt);
+            }
+        });
+
+        guardarAf.setText("Guardar");
+        guardarAf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarAfActionPerformed(evt);
+            }
+        });
+
+        cargarAF.setText("Cargar AF");
+        cargarAF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cargarAFActionPerformed(evt);
+            }
+        });
+
+        jConvertirAF.setText("Convertir");
+
         javax.swing.GroupLayout jPanelAutomataFinitoLayout = new javax.swing.GroupLayout(jPanelAutomataFinito);
         jPanelAutomataFinito.setLayout(jPanelAutomataFinitoLayout);
         jPanelAutomataFinitoLayout.setHorizontalGroup(
             jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                        .addGap(61, 61, 61)
+                        .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tipoAf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cargarAF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(guardarAf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(generarAF, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
+                            .addComponent(labelTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(jConvertirAF)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
         jPanelAutomataFinitoLayout.setVerticalGroup(
             jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(generarAF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cargarAF)
+                .addGap(18, 18, 18)
+                .addComponent(guardarAf)
+                .addGap(14, 14, 14)
+                .addComponent(tipoAf)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTipo)
+                .addGap(18, 18, 18)
+                .addComponent(jConvertirAF)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAutomataFinitoLayout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
         jTabbedPaneMain.addTab("Automata finito", jPanelAutomataFinito);
@@ -282,11 +392,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelReconocimientoHilera.setLayout(jPanelReconocimientoHileraLayout);
         jPanelReconocimientoHileraLayout.setHorizontalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 648, Short.MAX_VALUE)
+            .addGap(0, 756, Short.MAX_VALUE)
         );
         jPanelReconocimientoHileraLayout.setVerticalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         jTabbedPaneMain.addTab("Reconocimiento hilera", jPanelReconocimientoHilera);
@@ -437,10 +547,106 @@ public class MainJFrame extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-/**
- * @param args the command line arguments
- */
-public static void main(String args[]) {
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void imprimirAF(AF af) {
+
+// Crea modelo de la tabla
+        DefaultTableModel modeloAF = new DefaultTableModel();
+
+        List<String> estados = af.getEstados();
+        List<String> simbolos = af.getSimbolos();
+        List<String> salidas = af.getSalidas();
+        String[][] af1 = af.getAf();
+
+        modeloAF.addColumn("  ");
+        for (String x : simbolos) {
+            modeloAF.addColumn(x);
+        }
+        modeloAF.addColumn("Salida");
+
+        for (int i = 0; i <= estados.size() - 1; i++) {
+            //System.out.print(estados.get(i) + " ");
+            Vector fila = new Vector();
+            fila.add(estados.get(i));
+            for (int j = 0; j <= simbolos.size() - 1; j++) {
+                fila.add(af1[i][j]);
+            }
+            fila.add(salidas.get(i));
+            modeloAF.addRow(fila);
+        }
+
+        jTable.setModel(modeloAF);
+
+    }
+
+    private void generarAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarAFActionPerformed
+
+        // TODO add your handling code here:
+        //Lee gramatica 
+        Gramatica gra = new Gramatica();
+        JFileChooser fc = new JFileChooser();
+        fc.showOpenDialog(fc);
+        try {
+            gra.leerGramatica(fc.getSelectedFile().getPath());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Crea AF si es regular
+        AF af = new AF(gra);
+        imprimirAF(af);
+        if (af.isDeterministico()) {
+            tipoAf.setText("Tipo: Deterministico");
+        } else {
+            labelTipo.setText("Tipo: No Deterministico");
+            jConvertirAF.setVisible(true);
+        }
+
+//        if(gra.getIsRegular()){
+//        }else{
+//        JOptionPane.showMessageDialog(rootPane,"La grámatica ingresada no es regular. \n No puede generarse AF.");
+//        }
+
+    }//GEN-LAST:event_generarAFActionPerformed
+
+    private void labelTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelTipoActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_labelTipoActionPerformed
+
+    private void guardarAfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAfActionPerformed
+        // TODO add your handling code here:
+        af.guardarAF();
+     
+
+    }//GEN-LAST:event_guardarAfActionPerformed
+
+    private void cargarAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargarAFActionPerformed
+        // TODO add your handling code here:
+        //Lee gramatica 
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("af");
+        JFileChooser fc = new JFileChooser();
+//        fc.setFileFilter(filter);
+        fc.showOpenDialog(fc);
+        AF af = new AF(fc.getSelectedFile().getPath());
+        imprimirAF(af);
+        if (af.isDeterministico()) {
+            tipoAf.setText("Tipo: Deterministico");
+        } else {
+            labelTipo.setText("Tipo: No Deterministico");
+            jConvertirAF.setVisible(true);
+        }
+
+
+    }//GEN-LAST:event_cargarAFActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -496,6 +702,10 @@ public static void main(String args[]) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea gramaticaSimplificada;
+    private javax.swing.JToggleButton cargarAF;
+    private javax.swing.JToggleButton generarAF;
+    private javax.swing.JToggleButton guardarAf;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBorrarUltimo;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
@@ -504,6 +714,7 @@ public static void main(String args[]) {
     private javax.swing.JButton jButtonNuevoTerminal;
     private javax.swing.JButton jButtonSecuenciaNula;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JToggleButton jConvertirAF;
     private javax.swing.JLabel jLabelNumeroProduccion;
     private javax.swing.JList<String> jListGramatica;
     private javax.swing.JPanel jPanelAutomataFinito;
@@ -514,11 +725,16 @@ public static void main(String args[]) {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPaneGramatica;
     private javax.swing.JTabbedPane jTabbedPaneMain;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextPane jTextPaneProduccionSeleccionada;
     private javax.swing.JLabel noTerminalesAlcanzables;
     private javax.swing.JLabel noTerminalesInalcanzables;
     private javax.swing.JLabel noTerminalesMuertos;
     private javax.swing.JLabel noterminalesVivos;
     private javax.swing.JButton simplificar;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton labelTipo;
+    private javax.swing.JLabel tipoAf;
     // End of variables declaration//GEN-END:variables
 }
