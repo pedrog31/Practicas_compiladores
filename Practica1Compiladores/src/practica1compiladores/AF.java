@@ -61,13 +61,15 @@ public class AF {
         List<Produccion> producciones = g.getProducciones();
 
         for (Produccion i : producciones) {
-            // System.out.println(i);
+             System.out.println(i);
 
             if (i.isOfAcceptance()) {
                 // Si es de aceptación, 
-                nTerminal = i.getPartes(2);
+                nTerminal = i.getPartes(0);
                 pEstado = estados.indexOf(nTerminal);
-                salidas.add("1");
+                System.out.println(pEstado);
+                
+                salidas.set(pEstado, "1");
 
                 if (pEstado == -1) {
                     System.out.println("No puede haber estado de aceptación sin ninguna transición");
@@ -75,9 +77,9 @@ public class AF {
 
             } else {
                 salidas.add("0");
-                nTerminal = i.getPartes(2);
-                simbolo = i.getPartes(5);
-                nTerminal2 = i.getPartes(6);
+                nTerminal = i.getPartes(0);
+                simbolo = i.getPartes(2);
+                nTerminal2 = i.getPartes(3);
 
                 pEstado = estados.indexOf(nTerminal);
                 pEstado2 = estados.indexOf(nTerminal2);
