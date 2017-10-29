@@ -16,7 +16,6 @@ import javax.swing.JFileChooser;
 public class Main {
     /**
      * @param args the command line arguments
-     * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
         
@@ -26,21 +25,16 @@ public class Main {
 //        });
 //        System.out.println(produccion.toString());
         
-         Gramatica gra = new Gramatica();
+        Gramatica gra = new Gramatica();
          JFileChooser fc= new JFileChooser();
          fc.showOpenDialog(fc);
          gra.leerGramatica(fc.getSelectedFile().getPath());
          
+         
+   
          AF af = new AF(gra);
          af.imprimirAF();
-   
-        AF af2 = new AF();
-        af.unir(af2, "<a>,<v>");
-            af.comprobarUnion("Lo,lo", "b,b,d");
 
-           
-
-           
     }
   
 }
