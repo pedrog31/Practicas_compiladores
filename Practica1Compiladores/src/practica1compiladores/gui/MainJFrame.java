@@ -89,7 +89,11 @@ public class MainJFrame extends javax.swing.JFrame {
         guardarAf = new javax.swing.JToggleButton();
         cargarAF = new javax.swing.JToggleButton();
         jConvertirAF = new javax.swing.JToggleButton();
+        jButtonSimplificarAutomata = new javax.swing.JButton();
         jPanelReconocimientoHilera = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldHilera = new javax.swing.JTextField();
+        jButtonReconocerHilera = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
@@ -177,7 +181,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE))
+                        .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
                     .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNumeroProduccion)
@@ -255,7 +259,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(simplificar, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addComponent(simplificar, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                     .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
                         .addComponent(noTerminalesMuertos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -344,6 +348,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jConvertirAF.setText("Convertir");
 
+        jButtonSimplificarAutomata.setText("Simplificar");
+        jButtonSimplificarAutomata.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSimplificarAutomataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelAutomataFinitoLayout = new javax.swing.GroupLayout(jPanelAutomataFinito);
         jPanelAutomataFinito.setLayout(jPanelAutomataFinitoLayout);
         jPanelAutomataFinitoLayout.setHorizontalGroup(
@@ -353,18 +364,21 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tipoAf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                                .addComponent(tipoAf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(cargarAF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(guardarAf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(generarAF, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)))
-                            .addComponent(labelTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(generarAF, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                                    .addComponent(jButtonSimplificarAutomata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
                         .addGap(111, 111, 111)
                         .addComponent(jConvertirAF)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
@@ -375,32 +389,60 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addComponent(generarAF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cargarAF)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(guardarAf)
-                .addGap(14, 14, 14)
-                .addComponent(tipoAf)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelTipo)
-                .addGap(18, 18, 18)
-                .addComponent(jConvertirAF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonSimplificarAutomata)
+                .addGap(17, 17, 17)
+                .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                        .addComponent(labelTipo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jConvertirAF))
+                    .addComponent(tipoAf))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAutomataFinitoLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(58, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
 
         jTabbedPaneMain.addTab("Automata finito", jPanelAutomataFinito);
 
+        jLabel1.setText("Ingrese la Hilera que desea reconocer");
+
+        jButtonReconocerHilera.setText("Reconocer");
+        jButtonReconocerHilera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReconocerHileraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelReconocimientoHileraLayout = new javax.swing.GroupLayout(jPanelReconocimientoHilera);
         jPanelReconocimientoHilera.setLayout(jPanelReconocimientoHileraLayout);
         jPanelReconocimientoHileraLayout.setHorizontalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 756, Short.MAX_VALUE)
+            .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jTextFieldHilera))
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonReconocerHilera)
+                .addContainerGap(472, Short.MAX_VALUE))
         );
         jPanelReconocimientoHileraLayout.setVerticalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 379, Short.MAX_VALUE)
+            .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldHilera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonReconocerHilera))
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Reconocimiento hilera", jPanelReconocimientoHilera);
@@ -520,7 +562,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBorrarUltimoActionPerformed
 
     private void jButtonSecuenciaNulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSecuenciaNulaActionPerformed
-        produccionActual.addPart("λ");
+        produccionActual.addPart("^");
         jButtonNuevoNoTerminal.setEnabled(false);
         jButtonNuevoTerminal.setEnabled(false);
         jButtonSecuenciaNula.setEnabled(false);
@@ -551,9 +593,18 @@ public class MainJFrame extends javax.swing.JFrame {
         gramatica.guardar();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonReconocerHileraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReconocerHileraActionPerformed
+        String hilera = jTextFieldHilera.getText();
+        if (af == null) {
+            JOptionPane.showMessageDialog(rootPane, "No tienes ningun automata cargado.");
+            return;
+        }
+        if (af.comprobarHilera(hilera)) {
+            JOptionPane.showMessageDialog(rootPane, "La hilera cumple con los requerimientos del automata");
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "La hilera no cumple con los requerimientos del automata");
+        }
+    }//GEN-LAST:event_jButtonReconocerHileraActionPerformed
 
     private void imprimirAF(AF af) {
 
@@ -623,7 +674,7 @@ public class MainJFrame extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
 //        fc.setFileFilter(filter);
         fc.showOpenDialog(fc);
-        AF af = new AF(fc.getSelectedFile().getPath());
+        af = new AF(fc.getSelectedFile().getPath());
         imprimirAF(af);
         if (af.isDeterministico()) {
             tipoAf.setText("Tipo: Deterministico");
@@ -634,6 +685,10 @@ public class MainJFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_cargarAFActionPerformed
+
+    private void jButtonSimplificarAutomataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimplificarAutomataActionPerformed
+        System.out.print( af.getEstadosEquivalentes());
+    }//GEN-LAST:event_jButtonSimplificarAutomataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -703,8 +758,11 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevaProduccion;
     private javax.swing.JButton jButtonNuevoNoTerminal;
     private javax.swing.JButton jButtonNuevoTerminal;
+    private javax.swing.JButton jButtonReconocerHilera;
     private javax.swing.JButton jButtonSecuenciaNula;
+    private javax.swing.JButton jButtonSimplificarAutomata;
     private javax.swing.JToggleButton jConvertirAF;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelNumeroProduccion;
     private javax.swing.JList<String> jListGramatica;
@@ -718,6 +776,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPaneGramatica;
     private javax.swing.JTabbedPane jTabbedPaneMain;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField jTextFieldHilera;
     private javax.swing.JTextPane jTextPaneProduccionSeleccionada;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;

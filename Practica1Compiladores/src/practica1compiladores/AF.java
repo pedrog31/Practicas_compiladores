@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
@@ -30,15 +32,15 @@ public class AF {
     private boolean deterministico;
     int nEstados;
     int nSimbolos;
-    
-    public AF(){    
+
+    public AF() {
         af = new String[22][22];
         estados = new ArrayList();
         simbolos = new ArrayList();
         salidas = new ArrayList();
         estadosNuevos = new ArrayList();
         deterministico = true;
-    
+
     }
 
     public AF(Gramatica g) {
@@ -61,14 +63,14 @@ public class AF {
         List<Produccion> producciones = g.getProducciones();
 
         for (Produccion i : producciones) {
-             System.out.println(i);
+            System.out.println(i);
 
             if (i.isOfAcceptance()) {
                 // Si es de aceptación, 
                 nTerminal = i.getPartes(0);
                 pEstado = estados.indexOf(nTerminal);
                 System.out.println(pEstado);
-                
+
                 salidas.set(pEstado, "1");
 
                 if (pEstado == -1) {
@@ -120,7 +122,7 @@ public class AF {
     }
 
     public AF(String ruta) {
-        
+
         //carga af desde un archivo
         Boolean creado = false;
         estados = new ArrayList();
@@ -174,7 +176,7 @@ public class AF {
     }
 
     public void llenarAF(int where, String linea) {
-        
+
         //llena af dependiendo si es o no estado, transicion o salida
         System.out.println("LINEA " + linea);
 
@@ -201,60 +203,50 @@ public class AF {
 
     }
 
-    public AF convertirAf(){
-       AF af2 = new AF();
-       
-       
-    
+    public AF convertirAf() {
+        AF af2 = new AF();
 
+        return af2;
+    }
 
-    
-    return af2;
-}
-    
-    public void unir(AF afNuevo, String transicion){
-        
+    public void unir(AF afNuevo, String transicion) {
+
         // esto creo que junta muchos estados de una transicion no deterministica y los vuelve uno agregandolos al nuevo af
         System.out.println("--UNIÓN--");
         String partes[] = transicion.split(",");
-        
-       for(int i=0; i<=this.simbolos.size()-1;i++){
-        
+
+        for (int i = 0; i <= this.simbolos.size() - 1; i++) {
+
 //           for (int j=0 ; j<=partes.length-1; j++ ){
 //               
 //               int x = this.estados.indexOf(partes[i]);            
 //               System.out.println("Union [x][i] "+this.af[x][i]);
 //                 System.out.println("Union [i][x] "+this.af[i][x]);
 //           }
-       
-       }
-        
+        }
+
     }
 
-    public String comprobarUnion(String a, String b){
-        String newEstado="";
+    public String comprobarUnion(String a, String b) {
+        String newEstado = "";
 
         String[] pA = a.split(",");
         List<String> partesA = new ArrayList<String>(Arrays.asList(pA));
         System.out.println(partesA);
-         String[] pB = b.split(",");
+        String[] pB = b.split(",");
         List<String> partesB = new ArrayList<String>(Arrays.asList(pB));
         System.out.println(partesB);
-        
-        
-        
-        
-    return newEstado;
+
+        return newEstado;
     }
-  
 
     public void guardarAF() {
 
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(fc);
-        String fileExt= ".af";
+        String fileExt = ".af";
 
-        String ruta = fc.getSelectedFile().getPath()+fileExt;
+        String ruta = fc.getSelectedFile().getPath() + fileExt;
         File archivo = new File(ruta);
 
         BufferedWriter bw = null;
@@ -315,13 +307,11 @@ public class AF {
             System.out.println();
         }
         System.out.println("___________________________");
-        System.out.println("simbolos "+simbolos);
-        System.out.println("estados "+estados);
-        System.out.println("simbolos nuevos "+ estadosNuevos);
+        System.out.println("simbolos " + simbolos);
+        System.out.println("estados " + estados);
+        System.out.println("simbolos nuevos " + estadosNuevos);
 
     }
-    
-    
 
     public List<String> getSalidas() {
         return salidas;
@@ -361,6 +351,194 @@ public class AF {
 
     public void setAf(String[][] af) {
         this.af = af;
+    }
+
+    public boolean comprobarHilera(String hilera) {
+        String estado = estados.get(0);
+        int posicionEstado = -1;
+        for (int i = 0; hilera.length() > i; i++) {
+            posicionEstado = estados.indexOf(estado);
+            int posicionSimbolo = simbolos.indexOf("" + hilera.charAt(i));
+            estado = af[posicionEstado][posicionSimbolo];
+            if (estado.equals("null")) {
+                return false;
+            }
+        }
+        return posicionEstado != -1 && salidas.get(posicionEstado).equals("1");
+    }
+
+    public HashSet<HashSet<String>> getEstadosEquivalentes() {
+        HashSet<HashSet<String>> particiones = primeraParticion();
+        particiones = partir(particiones);
+        return particiones;
+    }
+
+    private HashSet<HashSet<String>> partir(HashSet<HashSet<String>> particiones) {
+        for (int i = 0; i < particiones.size(); i++) {
+            HashSet<String> particion = (HashSet) getElementForPosition(particiones, i);
+            int j = 0;
+            for (String simbolo : simbolos) {
+                ArrayList<String> transiciones = getTransiciones(particion, j);
+                ArrayList<String> numerosTransiciones = getNumerosTransicion(transiciones, particiones);
+                HashSet<HashSet<String>> newParticiones = getNewParticiones(numerosTransiciones, particion);
+                if (newParticiones.size() > 1){
+                    particiones.remove(particion);
+                    particiones.addAll(newParticiones);
+                    i = -1;
+                    break;
+                }
+                j++;
+            }
+        }
+        return particiones;
+    }
+
+    /**
+     * funciona melo
+     *
+     * @return
+     */
+    private HashSet<HashSet<String>> primeraParticion() {
+        HashSet<HashSet<String>> particiones = new HashSet();
+        HashSet<String> particion0 = new HashSet();
+        HashSet<String> particion1 = new HashSet();
+        int i = 0;
+        for (String salida : salidas) {
+            if (salida.equals("0")) {
+                particion0.add(estados.get(i));
+            } else {
+                if (salida.equals("1")) {
+                    particion1.add(estados.get(i));
+                }
+            }
+            i++;
+        }
+        if (!particion0.isEmpty()) {
+            particiones.add(particion0);
+        }
+        if (!particion1.isEmpty()) {
+            particiones.add(particion1);
+        }
+        return particiones;
+    }
+
+    /**
+     * funciona melo
+     *
+     * @param set
+     * @param elementPosition
+     * @return
+     */
+    public Object getElementForPosition(HashSet set, int elementPosition) {
+        int i = 0;
+        for (Iterator<Object> it = set.iterator(); it.hasNext();) {
+            Object item = it.next();
+            if (elementPosition == i) {
+                return item;
+            }
+            i++;
+        }
+        return null;
+    }
+
+    /**
+     * funciona melo
+     *
+     * @param set
+     * @param element
+     * @return
+     */
+    public int indexOf(HashSet set, Object element) {
+        int i = 0;
+        for (Iterator<Object> it = set.iterator(); it.hasNext();) {
+            Object item = it.next();
+            if (item.equals(element)) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    /**
+     * Funciona melo
+     *
+     * @param particion
+     * @param j
+     * @return
+     */
+    private ArrayList<String> getTransiciones(HashSet<String> particion, int j) {
+        ArrayList<String> transiciones = new ArrayList();
+        String transicion;
+        for (String estado : particion) {
+            int posicionEstado = getPosicionEstado(estado);
+            transiciones.add(af[posicionEstado][j]);
+        }
+        return transiciones;
+    }
+
+    /**
+     * funciona melo
+     *
+     * @param estado
+     * @return
+     */
+    private int getPosicionEstado(String estado) {
+        for (int i = 0; estados.size() > i; i++) {
+            if (estados.get(i).equals(estado)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getNumeroTransicion(String transicion, HashSet<HashSet<String>> particiones) {
+        int i = 0;
+        for (HashSet<String> particion : particiones) {
+            if (particion.contains(transicion)) {
+                return i+"";
+            }
+            i++;
+        }
+        return -1+"";
+    }
+
+    private ArrayList<String> getNumerosTransicion(ArrayList<String> transiciones, HashSet<HashSet<String>> particiones) {
+        ArrayList<String> numerosTransiciones = new ArrayList();
+        for (String transicion : transiciones) {
+            numerosTransiciones.add(getNumeroTransicion(transicion, particiones));
+        }
+        return numerosTransiciones;
+    }
+
+    private HashSet<HashSet<String>> getNewParticiones(ArrayList<String> numerosTransiciones, HashSet<String> particion) {
+        HashSet<String> copiaParticion = new HashSet();
+        copiaParticion.addAll(particion);
+        HashSet<HashSet<String>> nuevasParticiones = new HashSet();
+        HashSet<String> nuevaParticion;
+        while (!numerosTransiciones.isEmpty()) {
+            String transicionActual = numerosTransiciones.get(0);
+            nuevaParticion = new HashSet();
+            while (numerosTransiciones.indexOf(transicionActual) != -1) {
+                String estado = (String) getElementForPosition(copiaParticion, numerosTransiciones.indexOf(transicionActual));
+                copiaParticion.remove(estado);
+                numerosTransiciones.remove(transicionActual);
+                nuevaParticion.add(estado);
+            }
+            nuevasParticiones.add(nuevaParticion);
+        }
+
+        return nuevasParticiones;
+    }
+
+    private boolean validar(HashSet<String> nuevaParticion, HashSet<HashSet<String>> nuevasParticiones) {
+        for (String estadoParticion: nuevaParticion) {
+            for (HashSet<String> particion: nuevasParticiones) {
+                if (particion.contains(estadoParticion))
+                    return false;
+            }
+        }
+        return true;
     }
 
 }
