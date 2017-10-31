@@ -71,6 +71,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jButtonBorrarUltimo = new javax.swing.JButton();
         jButtonSecuenciaNula = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
+        jButtonEliminarProduccion = new javax.swing.JButton();
         jPanelSimplificacionGramatica = new javax.swing.JPanel();
         simplificar = new javax.swing.JButton();
         noterminalesVivos = new javax.swing.JLabel();
@@ -169,6 +170,13 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButtonEliminarProduccion.setText("Eliminar produccion");
+        jButtonEliminarProduccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarProduccionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCreacionGramaticaLayout = new javax.swing.GroupLayout(jPanelCreacionGramatica);
         jPanelCreacionGramatica.setLayout(jPanelCreacionGramaticaLayout);
         jPanelCreacionGramaticaLayout.setHorizontalGroup(
@@ -176,12 +184,6 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneGramatica)
-                    .addComponent(jButtonNuevaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE))
                     .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNumeroProduccion)
@@ -192,11 +194,23 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                                 .addGap(143, 143, 143)
-                                .addComponent(jButtonGuardar))
+                                .addComponent(jButtonGuardar)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonSecuenciaNula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addComponent(jButtonSecuenciaNula, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonEliminarProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
+                    .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                        .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneGramatica)
+                            .addComponent(jButtonNuevaProduccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
             .addGroup(jPanelCreacionGramaticaLayout.createSequentialGroup()
                 .addGap(230, 230, 230)
                 .addComponent(jButtonNuevaGramatica, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,12 +227,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(jButtonBorrarUltimo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCreacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevoTerminal)
                     .addComponent(jButtonNuevoNoTerminal)
-                    .addComponent(jButtonSecuenciaNula))
+                    .addComponent(jButtonSecuenciaNula)
+                    .addComponent(jButtonEliminarProduccion))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNuevaProduccion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -259,7 +274,7 @@ public class MainJFrame extends javax.swing.JFrame {
             .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelSimplificacionGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(simplificar, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+                    .addComponent(simplificar, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
                     .addGroup(jPanelSimplificacionGramaticaLayout.createSequentialGroup()
                         .addComponent(noTerminalesMuertos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -347,6 +362,11 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         jConvertirAF.setText("Convertir");
+        jConvertirAF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jConvertirAFActionPerformed(evt);
+            }
+        });
 
         jButtonSimplificarAutomata.setText("Simplificar");
         jButtonSimplificarAutomata.addActionListener(new java.awt.event.ActionListener() {
@@ -364,21 +384,21 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
-                                .addComponent(tipoAf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tipoAf, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(cargarAF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(guardarAf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(generarAF, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                    .addComponent(jButtonSimplificarAutomata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(jButtonSimplificarAutomata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(labelTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addGap(112, 112, 112)
                         .addComponent(jConvertirAF)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
         );
@@ -394,12 +414,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSimplificarAutomata)
                 .addGap(17, 17, 17)
-                .addGroup(jPanelAutomataFinitoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelAutomataFinitoLayout.createSequentialGroup()
-                        .addComponent(labelTipo)
-                        .addGap(18, 18, 18)
-                        .addComponent(jConvertirAF))
-                    .addComponent(tipoAf))
+                .addComponent(tipoAf)
+                .addGap(13, 13, 13)
+                .addComponent(labelTipo)
+                .addGap(18, 18, 18)
+                .addComponent(jConvertirAF)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAutomataFinitoLayout.createSequentialGroup()
                 .addContainerGap(58, Short.MAX_VALUE)
@@ -431,7 +450,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonReconocerHilera)
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(492, Short.MAX_VALUE))
         );
         jPanelReconocimientoHileraLayout.setVerticalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,8 +497,9 @@ public class MainJFrame extends javax.swing.JFrame {
                         modelo.addElement(produccion.toString());
                     });
                     jListGramatica.setModel(modelo);
-                    if (!gramatica.getProducciones().isEmpty())
+                    if (!gramatica.getProducciones().isEmpty()) {
                         jButtonGuardar.setEnabled(true);
+                    }
                 } catch (FileNotFoundException ex) {
                 }
             }
@@ -491,18 +511,31 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevaGramaticaActionPerformed
 
     private void jButtonNuevaProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaProduccionActionPerformed
-        if (editing) {
-            jTextPaneProduccionSeleccionada.setText("");
-            editing = false;
-        } else {
-            gramatica.getProducciones().add(produccionActual);
-            modelo.addElement(produccionActual.toString());
-            jListGramatica.setModel(modelo);
+        for (Produccion produccion : gramatica.getProducciones()) {
+            if (produccion.getId() == produccionActual.getId()) {
+                gramatica.getProducciones().get(gramatica.getProducciones().indexOf(produccion)).setPartes(produccionActual.getPartes());
+                produccionActual = new Produccion(gramatica.getProducciones().size() + 1);
+                modelo.clear();
+                int i = 0;
+                for (Produccion produccion2 : gramatica.getProducciones()) {
+                    i++;
+                    produccion2.setId(i);
+                    modelo.addElement(produccion2.toString());
+                }
+                jListGramatica.setModel(modelo);
+                return;
+            }
         }
-        jButtonBorrarUltimo.setEnabled(true);
-        jButtonNuevoNoTerminal.setEnabled(true);
+        gramatica.getProducciones().add(produccionActual);
+        modelo.clear();
+        int i = 0;
+        for (Produccion produccion2 : gramatica.getProducciones()) {
+            i++;
+            produccion2.setId(i);
+            modelo.addElement(produccion2.toString());
+        }
+        jListGramatica.setModel(modelo);
         produccionActual = new Produccion(gramatica.getProducciones().size() + 1);
-        jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
     }//GEN-LAST:event_jButtonNuevaProduccionActionPerformed
 
     private void jButtonNuevoTerminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTerminalActionPerformed
@@ -522,9 +555,13 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jButtonNuevoNoTerminalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoNoTerminalActionPerformed
         jButtonSecuenciaNula.setEnabled(false);
         String noTerminal = "<" + JOptionPane.showInputDialog(rootPane, "Inserte el no terminal", "Nuevo no terminal", JOptionPane.OK_OPTION) + ">";
+        if (produccionActual == null) {
+            produccionActual = new Produccion(gramatica.getProducciones().size() + 1);
+        }
         produccionActual.addPart(noTerminal);
         if (produccionActual.isOnRight()) {
             jButtonNuevaProduccion.setEnabled(produccionActual.isCorrect());
+            jButtonSecuenciaNula.setEnabled(produccionActual.isCorrect());
         } else {
             produccionActual.addPart(" -> ");
             jButtonNuevoTerminal.setEnabled(true);
@@ -543,10 +580,22 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void jButtonBorrarUltimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarUltimoActionPerformed
         editing = true;
-        String part = produccionActual.deleteLastPart();
+        String part = null;
+        try {
+            part = gramatica.getProducciones().get(gramatica.getProducciones().indexOf(produccionActual)).deleteLastPart();
+            produccionActual.deleteLastPart();
+        } catch (Exception e) {
+
+        }
         if (part != null) {
             try {
-                modelo.set(produccionActual.getId() - 1, produccionActual.toString());
+                modelo.clear();
+                int i = 0;
+                for (Produccion produccion : gramatica.getProducciones()) {
+                    i++;
+                    produccion.setId(i);
+                    modelo.addElement(produccion.toString());
+                }
                 jListGramatica.setModel(modelo);
 
             } catch (Exception e) {
@@ -554,6 +603,9 @@ public class MainJFrame extends javax.swing.JFrame {
             jTextPaneProduccionSeleccionada.setText(produccionActual.toString().substring(produccionActual.toString().indexOf(" ")));
             if (produccionActual.isSeparator(produccionActual.getPartes().get(produccionActual.getPartes().size() - 1))) {
                 jButtonSecuenciaNula.setEnabled(true);
+            }
+            if (produccionActual.isOnRight()) {
+                jButtonNuevoTerminal.setEnabled(true);
             }
         } else {
             JOptionPane.showMessageDialog(rootPane, "La produccion esta vacia", "Error", JOptionPane.ERROR_MESSAGE);
@@ -601,7 +653,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         if (af.comprobarHilera(hilera)) {
             JOptionPane.showMessageDialog(rootPane, "La hilera cumple con los requerimientos del automata");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(rootPane, "La hilera no cumple con los requerimientos del automata");
         }
     }//GEN-LAST:event_jButtonReconocerHileraActionPerformed
@@ -663,7 +715,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private void guardarAfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAfActionPerformed
         // TODO add your handling code here:
         af.guardarAF();
-     
+
 
     }//GEN-LAST:event_guardarAfActionPerformed
 
@@ -687,8 +739,45 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cargarAFActionPerformed
 
     private void jButtonSimplificarAutomataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSimplificarAutomataActionPerformed
-        System.out.print( af.getEstadosEquivalentes());
+        af = af.quitarExtraños();
+        af = af.simplificarPorEstadosEquivalentes();
+        imprimirAF(af);
     }//GEN-LAST:event_jButtonSimplificarAutomataActionPerformed
+
+    private void jButtonEliminarProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarProduccionActionPerformed
+        try {
+            gramatica.getProducciones().remove(produccionActual);
+            modelo.clear();
+            int i = 0;
+            for (Produccion produccion : gramatica.getProducciones()) {
+                i++;
+                produccion.setId(i);
+                modelo.addElement(produccion.toString());
+            }
+            jListGramatica.setModel(modelo);
+        } catch (Exception e) {
+
+        }
+
+    }//GEN-LAST:event_jButtonEliminarProduccionActionPerformed
+
+    private void jConvertirAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConvertirAFActionPerformed
+        // TODO add your handling code here:
+        //Lee gramatica 
+//        FileNameExtensionFilter filter = new FileNameExtensionFilter("af");
+        jConvertirAF.setVisible(false);
+        JFileChooser fc = new JFileChooser();
+//        fc.setFileFilter(filter);
+        fc.showOpenDialog(fc);
+        AF af = new AF(fc.getSelectedFile().getPath());
+        imprimirAF(af);
+        if (af.isDeterministico()) {
+            labelTipo.setText("Deterministico");
+        } else {
+            labelTipo.setText("No Deterministico");
+            jConvertirAF.setVisible(true);
+        }
+    }//GEN-LAST:event_jConvertirAFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -704,40 +793,24 @@ public class MainJFrame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-
-
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
-
-
-
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -753,6 +826,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea gramaticaSimplificada;
     private javax.swing.JToggleButton guardarAf;
     private javax.swing.JButton jButtonBorrarUltimo;
+    private javax.swing.JButton jButtonEliminarProduccion;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevaGramatica;
     private javax.swing.JButton jButtonNuevaProduccion;

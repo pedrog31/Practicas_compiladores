@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ import javax.swing.JFileChooser;
  * @author Meli
  */
 public class AF {
-
+    
     private List<String> estados;
     private List<String> simbolos;
     private String[][] af;
@@ -110,9 +111,10 @@ public class AF {
                 } else {
 
                     deterministico = false;
-                    aux = (af[pEstado][pSimbolo] + (",") + nTerminal2);
+
+                    aux = (af[pEstado][pSimbolo] + ("-") + nTerminal2);
                     af[pEstado][pSimbolo] = aux;
-                    estadosNuevos.add(aux);
+                    //estadosNuevos.set(pEstado,aux);
                     System.out.println(aux);
                 }
             }
@@ -178,8 +180,6 @@ public class AF {
     public void llenarAF(int where, String linea) {
 
         //llena af dependiendo si es o no estado, transicion o salida
-        System.out.println("LINEA " + linea);
-
         String[] partes = linea.split(" ");
 
         switch (where) {
@@ -203,41 +203,181 @@ public class AF {
 
     }
 
-    public AF convertirAf() {
+    public AF convertirADeterministico() {
         AF af2 = new AF();
+        af2.simbolos = this.simbolos;
+        System.out.println("CONVERSIÓN A DETER---------------------------");
 
+        // recorrer estado inicial e ir preguntando 
+        this.duplicar(af2, this.estados.get(0));
+        af2.deterministico = true;
         return af2;
     }
 
-    public void unir(AF afNuevo, String transicion) {
+    public void duplicar(AF af2, String transicion) {
+        String transicionNueva;
 
-        // esto creo que junta muchos estados de una transicion no deterministica y los vuelve uno agregandolos al nuevo af
+        System.out.println("metodo duplicar " + transicion);
+
+        if (af2.estados.contains(transicion) == false) {
+            //si ya esta en af2 no hacer nada 
+            // DE lo contrario  
+            int i = this.estados.indexOf(transicion);
+            System.out.println(i);
+
+            af2.salidas.add(this.salidas.get(i));
+            af2.estados.add(transicion);
+            int i2 = af2.estados.size() - 1;
+
+            for (int j = 0; j <= this.simbolos.size() - 1; j++) {
+
+                transicionNueva = this.af[i][j];
+
+                if (transicionNueva != null) {
+                    transicionNueva = this.organizarEstado(transicionNueva);
+                    af2.af[i2][j] = transicionNueva;
+                    System.out.println("se guardó en af2 " + transicionNueva);
+
+                    //pregunta si ya existe no hace nada porque debe estar 
+                    // si no existe en af2 entonces debe agregarla con este mismo metodo
+                    //preguntando que tipo de transicion es 
+                    if (af2.estados.contains(transicionNueva) == false) {
+
+                        if (this.isTransicionNoDeterministica(transicionNueva)) {
+                            af2.estados.add(transicionNueva);
+                            System.out.println("La transicion " + transicionNueva + " es no deterministica");
+                            this.unir(af2, transicionNueva);
+
+                        } else {
+
+                            //Duplicar la misma transición en af2 porque transicion = esget(i)
+                            this.duplicar(af2, transicionNueva);
+
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public void unir(AF af2, String transicion) {
+        int x, p;
+        String aux;
+        String sal = "0";
+
+        List<String> partes = this.organizarEstado(transicion.split("-"));
+
         System.out.println("--UNIÓN--");
-        String partes[] = transicion.split(",");
 
+        //Como antes de llamar esta funcion se agrego la transicion entonces p será la posicion en af2 
+        p = af2.estados.size() - 1;
+
+        //Para hacer la union de las transiciones se usa un  
+        //ciclo que recorre por columnas (simbolos)
         for (int i = 0; i <= this.simbolos.size() - 1; i++) {
+            System.out.println("       SIMBOLO " + this.simbolos.get(i));
 
-//           for (int j=0 ; j<=partes.length-1; j++ ){
-//               
-//               int x = this.estados.indexOf(partes[i]);            
-//               System.out.println("Union [x][i] "+this.af[x][i]);
-//                 System.out.println("Union [i][x] "+this.af[i][x]);
-//           }
+            // Se reinicia la variable para guardar transiciones de nuevo simbolo
+            aux = "";
+
+            // ciclo que recorre los estados involucrados en la union
+            // en este ciclo interno se va haciendo la union dentro del simbolo i
+            for (int j = 0; j <= partes.size() - 1; j++) {
+
+                System.out.println("ESTADO " + partes.get(j));
+                // x es la posicion del estado de la transicion
+                x = this.estados.indexOf(partes.get(j));
+                //Simplificar y comprobar que no sean <a>-<a> 
+                //Menos costoso
+                //AUX es la union de dichos estados
+
+                aux = this.comprobarUnion(aux, this.af[x][i]);
+                //Acá se debe hacer 
+                System.out.println("Union [x][i] " + this.af[x][i]);
+
+                // calcular la union de las salidas
+                if (salidas.get(x).equals("1")) {
+                    sal = "1";
+                }
+            }
+
+            // guardar la union de las salidas
+            af2.salidas.add(p, sal);
+            //guarda cada nueva (o no) transicion en el nuevo af
+            //SI ES NUEVA TOCA LLENARLA USANDO ESTE METODO
+            aux = this.organizarEstado(aux);
+            af2.af[p][i] = aux;
+
+            if (af2.estados.contains(aux) == false) {
+
+                if (this.isTransicionNoDeterministica(aux)) {
+                    af2.estados.add(aux);
+                    this.unir(af2, aux);
+
+                } else {
+
+//               Duplicar la misma transición en af2 porque transicion = esget(i)
+                    this.duplicar(af2, aux);
+
+                }
+
+            }
+
         }
 
     }
 
     public String comprobarUnion(String a, String b) {
-        String newEstado = "";
+        // CREA EL NUEVO ESTADO A PARTIR  DE LAS TRANSICIONES STRINGS
+        //SIN REPETIR
+        if (a.equals(b) || b == null) {
+            return a;
+        }
 
-        String[] pA = a.split(",");
-        List<String> partesA = new ArrayList<String>(Arrays.asList(pA));
-        System.out.println(partesA);
-        String[] pB = b.split(",");
+        String[] pB = b.split("-");
         List<String> partesB = new ArrayList<String>(Arrays.asList(pB));
-        System.out.println(partesB);
 
-        return newEstado;
+        for (String x : partesB) {
+
+            if (a.indexOf(x) == -1) {
+
+                if (a.length() != 0) {
+                    a = a + "-" + x;
+                } else {
+                    a = x;
+                }
+
+            }
+        }
+        System.out.println(a);
+        return a;
+    }
+
+    public List<String> organizarEstado(String[] a) {
+// queria comprobar si esta el mismo contenido pero desorganizado
+        List<String> listaA = Arrays.asList(a);
+        Collections.sort(listaA);
+        return listaA;
+    }
+
+    public String organizarEstado(String a) {
+        String b = "";
+// queria comprobar si esta el mismo contenido pero desorganizado
+        List<String> listaA = this.organizarEstado(a.split("-"));
+        Collections.sort(listaA);
+
+        for (String x : listaA) {
+
+            if (b.length() != 0) {
+                b = b + "-" + x;
+            } else {
+                b = x;
+            }
+        }
+
+        return b;
     }
 
     public void guardarAF() {
@@ -309,8 +449,17 @@ public class AF {
         System.out.println("___________________________");
         System.out.println("simbolos " + simbolos);
         System.out.println("estados " + estados);
-        System.out.println("simbolos nuevos " + estadosNuevos);
+        System.out.println("estados nuevos " + estadosNuevos);
 
+    }
+
+    public Boolean isTransicionNoDeterministica(String transicion) {
+        // VER SI UNA TRANSICION EN LA MATRIZ AF TIENE "-" OSEA QUE ES NO DETERMINISTICA
+        //HACER OBVIAMENTE 
+        if (transicion.length() > 3) {
+            return true;
+        }
+        return false;
     }
 
     public List<String> getSalidas() {
@@ -353,6 +502,53 @@ public class AF {
         this.af = af;
     }
 
+    public AF quitarExtraños() {
+
+        System.out.println("QUITAR ESTADOS EXTRAÑOS");
+        // Debe ser deterministica para que no salgan errores
+        // recorrer estado inicial e ir preguntando 
+        AF af2 = new AF();
+        af2.simbolos = this.simbolos;
+        this.extraños(af2, this.estados.get(0));
+        return af2;
+    }
+
+    public void extraños(AF af2, String transicion) {
+        String transicion2;
+        System.out.println("metodo EXTRAÑOS " + transicion);
+        //Si ya esta en af2 no hacer nada 
+        // de lo contrario  
+        if (af2.estados.contains(transicion) == false) {
+            //posicion en af de transicion
+            int i = this.estados.indexOf(transicion);
+            //Se agrega a af2
+            af2.salidas.add(this.salidas.get(i));
+            af2.estados.add(transicion);
+            //i2= posicion de donde fue agregado la transicion
+            int i2 = af2.estados.size() - 1;
+
+            for (int j = 0; j <= this.simbolos.size() - 1; j++) {
+
+                transicion2 = this.af[i][j];
+
+                if (transicion2 != null) {
+                    // se guarda en af2 la nueva transicion
+                    af2.af[i2][j] = transicion2;
+                    //pregunta si ya existe no hace nada porque debe estar 
+                    // si no existe en af2 entonces debe agregarla con este mismo metodo
+                    //preguntando que tipo de transicion es 
+                    if (af2.estados.contains(transicion2) == false) {
+//                        //Duplicar la misma transición en af2 porque transicion = esget(i)
+                        
+                        this.extraños(af2, transicion2);
+
+                    }
+                }
+            }
+
+        }
+    }
+
     public boolean comprobarHilera(String hilera) {
         String estado = estados.get(0);
         int posicionEstado = -1;
@@ -381,7 +577,7 @@ public class AF {
                 ArrayList<String> transiciones = getTransiciones(particion, j);
                 ArrayList<String> numerosTransiciones = getNumerosTransicion(transiciones, particiones);
                 HashSet<HashSet<String>> newParticiones = getNewParticiones(numerosTransiciones, particion);
-                if (newParticiones.size() > 1){
+                if (newParticiones.size() > 1) {
                     particiones.remove(particion);
                     particiones.addAll(newParticiones);
                     i = -1;
@@ -496,11 +692,11 @@ public class AF {
         int i = 0;
         for (HashSet<String> particion : particiones) {
             if (particion.contains(transicion)) {
-                return i+"";
+                return i + "";
             }
             i++;
         }
-        return -1+"";
+        return -1 + "";
     }
 
     private ArrayList<String> getNumerosTransicion(ArrayList<String> transiciones, HashSet<HashSet<String>> particiones) {
@@ -531,14 +727,65 @@ public class AF {
         return nuevasParticiones;
     }
 
-    private boolean validar(HashSet<String> nuevaParticion, HashSet<HashSet<String>> nuevasParticiones) {
-        for (String estadoParticion: nuevaParticion) {
-            for (HashSet<String> particion: nuevasParticiones) {
-                if (particion.contains(estadoParticion))
-                    return false;
+    /**
+     * Realiza la simplificacion del automata por estados equivalentes, primero
+     * se deben de sacar estados extranos
+     *
+     * @return Automata finito simplificado
+     * @since 1.0
+     */
+    public AF simplificarPorEstadosEquivalentes() {
+        AF mAFSimplificado = new AF();
+        mAFSimplificado.deterministico = this.deterministico;
+        mAFSimplificado.simbolos.addAll(this.simbolos);
+        HashSet<HashSet<String>> estadosEquivalentes = this.getEstadosEquivalentes();
+        StringBuilder nuevoEstado;
+        for (HashSet<String> estadoEquivalente : estadosEquivalentes) {
+            nuevoEstado = new StringBuilder("<");
+            int posicionEstado = getPosicionPrimerEstado(estadoEquivalente);
+            mAFSimplificado.salidas.add(this.salidas.get(posicionEstado));
+            for (String estado : estadoEquivalente) {
+                estado = estado.replace("<", "").replace(">", "");
+                nuevoEstado.append(estado);
             }
+            nuevoEstado.append(">");
+            mAFSimplificado.estados.add(nuevoEstado.toString());
         }
-        return true;
+        int i = 0, j = 0;
+        for (String estado : mAFSimplificado.estados) {
+            j = 0;
+            for (String simbolo : mAFSimplificado.simbolos) {
+                mAFSimplificado.af[i][j] = getTransicion(estado, simbolo, mAFSimplificado.estados);
+                j++;
+            }
+            i++;
+        }
+        return mAFSimplificado;
     }
 
+    /**
+     * Obtiene la posicion del primer estadoEstado equivalente en la lista de
+     * estados sin simplificar para obtener su
+     *
+     * @param estadoEquivalente lista con los estados
+     * @return
+     */
+    private int getPosicionPrimerEstado(HashSet<String> estadoEquivalente) {
+        for (String estado : estadoEquivalente) {
+            return getPosicionEstado(estado);
+        }
+        return -1;
+    }
+
+    private String getTransicion(String estado, String simbolo, List<String> estados1) {
+        int i = estados.indexOf("<" + estado.charAt(1) + ">");
+        int j = simbolos.indexOf(simbolo);
+        String estadoViejo = af[i][j];
+        for (String estadoNuevo : estados1) {
+            if (estadoNuevo.contains(estadoViejo.replace("<", "").replace(">", ""))) {
+                return estadoNuevo;
+            }
+        }
+        return null;
+    }
 }
