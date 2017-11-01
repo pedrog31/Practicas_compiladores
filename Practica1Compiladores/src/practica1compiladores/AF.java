@@ -20,8 +20,8 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 /**
- *
- * @author Meli
+ * Representa a un automata finito ya sea deterministico o no deterministico
+ * @author Melissa
  */
 public class AF {
     
@@ -34,6 +34,10 @@ public class AF {
     int nEstados;
     int nSimbolos;
 
+    /**
+     * Instancia un nuevo automata finito vacio, inicializa todos sus componentes de igual forma
+     * @author Melissa
+     */
     public AF() {
         af = new String[22][22];
         estados = new ArrayList();
@@ -44,6 +48,10 @@ public class AF {
 
     }
 
+    /**
+     * Instancia un nuevo Automata finito con base en la gramatica enviada como parametro, esta debe de ser regular
+     * @param g Gramatica que sera llevada al automata finito.
+     */
     public AF(Gramatica g) {
 
         //no funcionan 
@@ -123,6 +131,10 @@ public class AF {
 
     }
 
+    /**
+     * Instancia un nuevo Automata finito con base en un archivo de texto enviado con su ruta como parametro, esta debe de ser regular
+     * @param ruta Ruta en el equipo al automata guardado como archivo de texto
+     */
     public AF(String ruta) {
 
         //carga af desde un archivo
@@ -177,6 +189,11 @@ public class AF {
 
     }
 
+    /**
+     * llena AF dependiendo si es o no estado, transicion o salida 
+     * @param where Tipo de entidad.
+     * @param linea Hilera que contiene la parte del automata
+     */
     public void llenarAF(int where, String linea) {
 
         //llena af dependiendo si es o no estado, transicion o salida
@@ -203,6 +220,10 @@ public class AF {
 
     }
 
+    /**
+     * Convierte el automata y devuelve un nuevo automata que reconoce las mismas hileras pero es deterministico
+     * @return Automata finito deterministico
+     */
     public AF convertirADeterministico() {
         AF af2 = new AF();
         af2.simbolos = this.simbolos;
@@ -214,6 +235,11 @@ public class AF {
         return af2;
     }
 
+    /**
+     * Duplica las transiciones del string que hay en el parametro en el af 2
+     * @param af2
+     * @param transicion 
+     */
     public void duplicar(AF af2, String transicion) {
         String transicionNueva;
 
@@ -262,6 +288,11 @@ public class AF {
 
     }
 
+    /**
+     * Une los estados que se encuentran en la transicion de tipo no deterministico
+     * @param af2
+     * @param transicion 
+     */
     public void unir(AF af2, String transicion) {
         int x, p;
         String aux;
@@ -329,9 +360,13 @@ public class AF {
 
     }
 
+    /**
+     * CREA EL NUEVO ESTADO A PARTIR  DE LAS TRANSICIONES STRINGS SIN REPETIR
+     * @param a
+     * @param b
+     * @return 
+     */
     public String comprobarUnion(String a, String b) {
-        // CREA EL NUEVO ESTADO A PARTIR  DE LAS TRANSICIONES STRINGS
-        //SIN REPETIR
         if (a.equals(b) || b == null) {
             return a;
         }
@@ -355,16 +390,24 @@ public class AF {
         return a;
     }
 
+    /**
+     * Comprueba si esta el mismo contenido pero desorganizado
+     * @param a
+     * @return 
+     */
     public List<String> organizarEstado(String[] a) {
-// queria comprobar si esta el mismo contenido pero desorganizado
         List<String> listaA = Arrays.asList(a);
         Collections.sort(listaA);
         return listaA;
     }
 
+    /**
+     * comprueba si esta el mismo contenido pero desorganizado
+     * @param a
+     * @return 
+     */
     public String organizarEstado(String a) {
         String b = "";
-// queria comprobar si esta el mismo contenido pero desorganizado
         List<String> listaA = this.organizarEstado(a.split("-"));
         Collections.sort(listaA);
 
@@ -380,6 +423,9 @@ public class AF {
         return b;
     }
 
+    /**
+     * Con base en el automata instanciado guarda este en un archivo de texto formato .af
+     */
     public void guardarAF() {
 
         JFileChooser fc = new JFileChooser();
@@ -432,27 +478,11 @@ public class AF {
 
     }
 
-    public void imprimirAF() {
-
-        System.out.println("");
-        for (String x : simbolos) {
-            System.out.print("     " + x);
-        }
-        System.out.println("");
-        for (int i = 0; i <= estados.size() - 1; i++) {
-            System.out.print(estados.get(i) + " ");
-            for (int j = 0; j <= simbolos.size() - 1; j++) {
-                System.out.print(af[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println("___________________________");
-        System.out.println("simbolos " + simbolos);
-        System.out.println("estados " + estados);
-        System.out.println("estados nuevos " + estadosNuevos);
-
-    }
-
+    /**
+     * Dice si una transaccion es o no deterministica, para esto cuenta la cantidad de transacciones que tiene esta
+     * @param transicion 
+     * @return 
+     */
     public Boolean isTransicionNoDeterministica(String transicion) {
         // VER SI UNA TRANSICION EN LA MATRIZ AF TIENE "-" OSEA QUE ES NO DETERMINISTICA
         //HACER OBVIAMENTE 
@@ -461,7 +491,11 @@ public class AF {
         }
         return false;
     }
-
+    
+    /**
+     * Obtiene la lista de salidas del automata
+     * @return 
+     */
     public List<String> getSalidas() {
         return salidas;
     }
@@ -470,6 +504,10 @@ public class AF {
         this.salidas = salidas;
     }
 
+    /**
+     * Obtiene el tipo de automata
+     * @return true si es deterministico, false de lo contrario.
+     */
     public boolean isDeterministico() {
         return deterministico;
     }
@@ -478,6 +516,10 @@ public class AF {
         this.deterministico = deterministico;
     }
 
+    /**
+     * Obtiene la lista de estados del automata
+     * @return 
+     */
     public List<String> getEstados() {
         return estados;
     }
@@ -486,6 +528,10 @@ public class AF {
         this.estados = estados;
     }
 
+    /**
+     * Obtiene la lista de simbolos del automata
+     * @return 
+     */
     public List<String> getSimbolos() {
         return simbolos;
     }
@@ -494,6 +540,10 @@ public class AF {
         this.simbolos = simbolos;
     }
 
+    /**
+     * Obtiene la matriz de transiciones
+     * @return 
+     */
     public String[][] getAf() {
         return af;
     }
@@ -502,6 +552,10 @@ public class AF {
         this.af = af;
     }
 
+    /**
+     * Elimina los estados extra;os del automata haciendo el recorrido sobre este
+     * @return Nuevo automata sin estados extra;os
+     */
     public AF quitarExtraños() {
 
         System.out.println("QUITAR ESTADOS EXTRAÑOS");
@@ -513,6 +567,11 @@ public class AF {
         return af2;
     }
 
+    /**
+     * Duplica la transicion y a;ade el estado en el af2
+     * @param af2
+     * @param transicion 
+     */
     public void extraños(AF af2, String transicion) {
         String transicion2;
         System.out.println("metodo EXTRAÑOS " + transicion);
@@ -549,6 +608,11 @@ public class AF {
         }
     }
 
+    /**
+     * Con base en una hilera enviada como parametro dice si es valida o no en el contexto del automata
+     * @param hilera que sera evaluada
+     * @return true si es correcta, false de lo contrario
+     */
     public boolean comprobarHilera(String hilera) {
         String estado = estados.get(0);
         int posicionEstado = -1;
@@ -563,12 +627,21 @@ public class AF {
         return posicionEstado != -1 && salidas.get(posicionEstado).equals("1");
     }
 
+    /**
+     * Obtiene una lista con el conjunto de estados que son equivalentes
+     * @return Lista con estados que son equivalentes
+     */
     public HashSet<HashSet<String>> getEstadosEquivalentes() {
         HashSet<HashSet<String>> particiones = primeraParticion();
         particiones = partir(particiones);
         return particiones;
     }
 
+    /**
+     * Despues de realizar la primera particion (que se hace evaluando los que tengan las mismas salidas) se parte nuevamente hasta que se haga una pasada completa
+     * @param particiones lista con los conjuntos de estados con salidas 0 y 1
+     * @return Lista con estados que son equivalentes
+     */
     private HashSet<HashSet<String>> partir(HashSet<HashSet<String>> particiones) {
         for (int i = 0; i < particiones.size(); i++) {
             HashSet<String> particion = (HashSet) getElementForPosition(particiones, i);
@@ -590,9 +663,8 @@ public class AF {
     }
 
     /**
-     * funciona melo
-     *
-     * @return
+     *Realiza la primera particion de los estados, un conjunto de aceptacion y otro de rechazo
+     * @return dos conjuntos de estados
      */
     private HashSet<HashSet<String>> primeraParticion() {
         HashSet<HashSet<String>> particiones = new HashSet();
@@ -619,9 +691,8 @@ public class AF {
     }
 
     /**
-     * funciona melo
-     *
-     * @param set
+     * Obtiene el elemento que se encuentra en la posicion de la lista enviada como parametro
+     * @param set Lista de elementos de los cuales se debe sacar el elemento objeto de la posicion
      * @param elementPosition
      * @return
      */
@@ -638,11 +709,10 @@ public class AF {
     }
 
     /**
-     * funciona melo
-     *
+     * Busca el elemento enviado como parametro en la lista tambien enviada como parametro
      * @param set
      * @param element
-     * @return
+     * @return la posicion del elemento encontrado, -1 si no encuentra ninguno
      */
     public int indexOf(HashSet set, Object element) {
         int i = 0;
@@ -657,9 +727,8 @@ public class AF {
     }
 
     /**
-     * Funciona melo
-     *
-     * @param particion
+     * Obtiene las transiciones hacia las cuales debe irse una particion
+     * @param particion 
      * @param j
      * @return
      */
@@ -674,8 +743,7 @@ public class AF {
     }
 
     /**
-     * funciona melo
-     *
+     * Busca en los estados del automata el estado enviado como parametro y devuelve la ubicacion de este
      * @param estado
      * @return
      */
@@ -688,6 +756,12 @@ public class AF {
         return -1;
     }
 
+    /**
+     * Obtiene el numero de la particion en la cual se encuentra la transicion enviada como parametro
+     * @param transicion
+     * @param particiones
+     * @return 
+     */
     private String getNumeroTransicion(String transicion, HashSet<HashSet<String>> particiones) {
         int i = 0;
         for (HashSet<String> particion : particiones) {
@@ -699,6 +773,12 @@ public class AF {
         return -1 + "";
     }
 
+    /**
+     * Obtiene la lista de todas las numeros de la particion en las cuales se encuentran las transiciones enviadas como parametro
+     * @param transiciones
+     * @param particiones
+     * @return 
+     */
     private ArrayList<String> getNumerosTransicion(ArrayList<String> transiciones, HashSet<HashSet<String>> particiones) {
         ArrayList<String> numerosTransiciones = new ArrayList();
         for (String transicion : transiciones) {
@@ -707,6 +787,12 @@ public class AF {
         return numerosTransiciones;
     }
 
+    /**
+     * Obtiene las transiciones que deben 
+     * @param numerosTransiciones
+     * @param particion
+     * @return 
+     */
     private HashSet<HashSet<String>> getNewParticiones(ArrayList<String> numerosTransiciones, HashSet<String> particion) {
         HashSet<String> copiaParticion = new HashSet();
         copiaParticion.addAll(particion);
@@ -777,6 +863,13 @@ public class AF {
         return -1;
     }
 
+    /**
+     * Obtiene la transicion tal cual debe quedar con los estados equivalentes
+     * @param estado
+     * @param simbolo
+     * @param estados1
+     * @return 
+     */
     private String getTransicion(String estado, String simbolo, List<String> estados1) {
         int i = estados.indexOf("<" + estado.charAt(1) + ">");
         int j = simbolos.indexOf(simbolo);

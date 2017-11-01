@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ *Representa una produccion la cual contiene un id y una lista de partes, las cuales pueden ser no terminales, separaciones o terminales
  * @author pedro
  */
 public class Produccion {
@@ -51,6 +51,10 @@ public class Produccion {
         partes.add(part);
     }
 
+    /**
+     * Eliimina la ultima parte de la produccion 
+     * @return parte eliminada
+     */
     public String deleteLastPart() {
         try {
             String part = partes.get(partes.size() - 1);
@@ -70,7 +74,10 @@ public class Produccion {
         });
         return textParts.toString();
     }
-
+    /**
+     * Llena la produccion con el string que entra como parametro
+     * @param textParts 
+     */
     private void reconocerProduccion(String textParts) {
         partes = new ArrayList();
         for (int i = textParts.indexOf(" ") + 1; i < textParts.length(); i++) {

@@ -5,21 +5,15 @@
  */
 package practica1compiladores.gui;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.util.Set;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import practica1compiladores.AF;
 import practica1compiladores.Gramatica;
@@ -312,6 +306,7 @@ public class MainJFrame extends javax.swing.JFrame {
         jTabbedPaneMain.addTab("Simplificacion gramatica", jPanelSimplificacionGramatica);
 
         generarAF.setText("Convertir");
+        generarAF.setEnabled(false);
         generarAF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generarAFActionPerformed(evt);
@@ -441,27 +436,29 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanelReconocimientoHilera.setLayout(jPanelReconocimientoHileraLayout);
         jPanelReconocimientoHileraLayout.setHorizontalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelReconocimientoHileraLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jTextFieldHilera))
+            .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+                .addGroup(jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jTextFieldHilera))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonReconocerHilera)
-                .addContainerGap(492, Short.MAX_VALUE))
+                        .addGap(327, 327, 327)
+                        .addComponent(jButtonReconocerHilera))
+                    .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
+                        .addGap(288, 288, 288)
+                        .addComponent(jLabel1)))
+                .addContainerGap(307, Short.MAX_VALUE))
         );
         jPanelReconocimientoHileraLayout.setVerticalGroup(
             jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelReconocimientoHileraLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(48, 48, 48)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelReconocimientoHileraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldHilera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonReconocerHilera))
-                .addContainerGap(338, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jTextFieldHilera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonReconocerHilera)
+                .addContainerGap(256, Short.MAX_VALUE))
         );
 
         jTabbedPaneMain.addTab("Reconocimiento hilera", jPanelReconocimientoHilera);
@@ -508,6 +505,7 @@ public class MainJFrame extends javax.swing.JFrame {
             jListGramatica.setModel(modelo);
             jButtonNuevoNoTerminal.setEnabled(true);
         }
+        generarAF.setEnabled(true);
     }//GEN-LAST:event_jButtonNuevaGramaticaActionPerformed
 
     private void jButtonNuevaProduccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaProduccionActionPerformed
@@ -690,21 +688,20 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     private void generarAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarAFActionPerformed
-        //Crea AF si es regular
-        af = new AF(gramatica);
-        imprimirAF(af);
-        if (af.isDeterministico()) {
-            tipoAf.setText("Tipo: Deterministico");
+        if (gramatica.getIsRegular()) {
+
+            af = new AF(gramatica);
+            imprimirAF(af);
+            if (af.isDeterministico()) {
+                tipoAf.setText("Tipo: Deterministico");
+            } else {
+                labelTipo.setText("Tipo: No Deterministico");
+                jConvertirAF.setVisible(true);
+            }
+
         } else {
-            labelTipo.setText("Tipo: No Deterministico");
-            jConvertirAF.setVisible(true);
+            JOptionPane.showMessageDialog(rootPane, "La grámatica ingresada no es regular. \n No puede generarse AF.");
         }
-
-//        if(gra.getIsRegular()){
-//        }else{
-//        JOptionPane.showMessageDialog(rootPane,"La grámatica ingresada no es regular. \n No puede generarse AF.");
-//        }
-
     }//GEN-LAST:event_generarAFActionPerformed
 
     private void labelTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_labelTipoActionPerformed
@@ -714,7 +711,14 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void guardarAfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarAfActionPerformed
         // TODO add your handling code here:
-        af.guardarAF();
+        //antes de guardarla volverla deterministica
+        if (af.isDeterministico()) {
+            af.guardarAF();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Antes de guardar, la gramática será convertida a determinística.");
+            AF af2 = af.convertirADeterministico();
+            af2.guardarAF();
+        }
 
 
     }//GEN-LAST:event_guardarAfActionPerformed
@@ -723,6 +727,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Lee gramatica 
 //        FileNameExtensionFilter filter = new FileNameExtensionFilter("af");
+        jConvertirAF.setVisible(false);
         JFileChooser fc = new JFileChooser();
 //        fc.setFileFilter(filter);
         fc.showOpenDialog(fc);
@@ -763,20 +768,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void jConvertirAFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConvertirAFActionPerformed
         // TODO add your handling code here:
-        //Lee gramatica 
-//        FileNameExtensionFilter filter = new FileNameExtensionFilter("af");
-        jConvertirAF.setVisible(false);
-        JFileChooser fc = new JFileChooser();
-//        fc.setFileFilter(filter);
-        fc.showOpenDialog(fc);
-        AF af = new AF(fc.getSelectedFile().getPath());
-        imprimirAF(af);
-        if (af.isDeterministico()) {
-            labelTipo.setText("Deterministico");
-        } else {
-            labelTipo.setText("No Deterministico");
-            jConvertirAF.setVisible(true);
-        }
+        if (!af.isDeterministico())
+         af = af.convertirADeterministico();
+         imprimirAF(af);
     }//GEN-LAST:event_jConvertirAFActionPerformed
 
     /**
